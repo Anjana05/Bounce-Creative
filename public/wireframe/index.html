@@ -1,0 +1,1135 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Homepage Redesign Prototype — Bounce Creative Designs</title>
+<style>
+/* ============================================================
+   Design tokens — taken from the live Bounce Creative Designs
+   brand assets, not invented:
+     #e50e46  crimson  — sampled from the store logo artwork
+     #373a36  charcoal — the dark ground the logo is drawn for
+     #549200  green    — bouncecreative.css
+     #3696ac  teal     — bouncecreative.css
+     #f1e726  yellow   — bouncecreative.css
+   Type: Poppins, per bouncecreative.css.
+   ============================================================ */
+:root{
+  --brand-ink:#373a36;
+  --brand-ink-soft:#5b605b;
+  --brand-ink-deep:#262826;
+  --brand-accent:#e50e46;
+  --brand-accent-dark:#c30b3b;
+  --brand-accent-soft:#fdeaf0;
+  --brand-eco:#549200;
+  --brand-teal:#3696ac;
+  --brand-yellow:#f1e726;
+
+  --bg:#ffffff;
+  --bg-alt:#f5f5f5;
+  --bg-deep:#373a36;
+  --line:#ededed;
+  --text:#373a36;
+  --text-muted:#868886;
+  --text-invert:#ffffff;
+
+  /* header is dark, because the brand logo is white artwork */
+  --hdr-bg:#373a36;
+  --hdr-line:rgba(255,255,255,.13);
+  --hdr-text:#ffffff;
+  --hdr-muted:#b9bcb8;
+  --hdr-field:rgba(255,255,255,.09);
+
+  --radius:10px;
+  --radius-lg:16px;
+  --shadow-sm:0 1px 2px rgba(15,29,46,.06),0 1px 3px rgba(15,29,46,.08);
+  --shadow-md:0 4px 6px -1px rgba(15,29,46,.08),0 10px 20px -8px rgba(15,29,46,.14);
+
+  --header-h:84px;
+  --header-h-compact:60px;
+  --wrap:1280px;
+  --focus:0 0 0 3px rgba(226,88,44,.45);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h-compact) + 16px)}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font:16px/1.55 "Poppins","Century Gothic",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:none;box-shadow:var(--focus);border-radius:6px}
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 20px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* --- prototype annotation chips ------------------------------------ */
+.anno{
+  position:absolute;top:8px;right:8px;z-index:5;
+  font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  background:rgba(15,29,46,.82);color:#fff;padding:3px 8px;border-radius:99px;
+  pointer-events:none;
+}
+section{position:relative}
+body.hide-anno .anno{display:none}
+
+.anno-bar{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:200;
+  display:flex;gap:8px;align-items:center;
+  background:var(--brand-ink);color:#fff;padding:8px 10px 8px 14px;border-radius:99px;
+  box-shadow:var(--shadow-md);font-size:13px;
+}
+.anno-bar button{
+  background:rgba(255,255,255,.14);padding:6px 12px;border-radius:99px;
+  font-size:12px;font-weight:600;
+}
+.anno-bar button:hover{background:rgba(255,255,255,.26)}
+
+/* --- typography ---------------------------------------------------- */
+.h-sec{font-size:clamp(24px,3.2vw,34px);line-height:1.2;margin:0 0 6px;letter-spacing:-.02em;color:var(--brand-ink)}
+.sub-sec{margin:0 0 28px;color:var(--text-muted);font-size:16px}
+.sec{padding:56px 0}
+.sec--alt{background:var(--bg-alt)}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:28px;flex-wrap:wrap}
+.sec-head .h-sec,.sec-head .sub-sec{margin:0}
+.link-more{color:var(--brand-accent);font-weight:650;font-size:14px;white-space:nowrap}
+.link-more:hover{text-decoration:underline}
+
+/* --- buttons ------------------------------------------------------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 24px;border-radius:var(--radius);font-weight:650;font-size:15px;
+  transition:background .15s ease,color .15s ease,transform .05s ease;
+}
+.btn:active{transform:translateY(1px)}
+.btn--primary{background:var(--brand-accent);color:#fff}
+.btn--primary:hover{background:var(--brand-accent-dark)}
+.btn--ghost{background:transparent;color:var(--brand-ink);border:1.5px solid var(--line)}
+.btn--ghost:hover{border-color:var(--brand-ink)}
+.btn--onDark{background:#fff;color:var(--brand-ink)}
+.btn--onDark:hover{background:#eef1f5}
+
+/* ============================================================
+   PROMO BAR + STICKY HEADER
+   ============================================================ */
+.promo{
+  background:var(--brand-accent);color:#fff;text-align:center;
+  font-size:13.5px;padding:9px 20px;letter-spacing:.01em;
+}
+.promo strong{background:rgba(255,255,255,.18);padding:2px 8px;border-radius:5px;margin-left:4px}
+
+.hdr{
+  position:sticky;top:0;z-index:100;background:var(--hdr-bg);color:var(--hdr-text);
+  border-bottom:1px solid var(--hdr-line);
+  transition:box-shadow .18s ease;
+}
+.hdr.is-stuck{box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.hdr__main{
+  display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:24px;
+  height:var(--header-h);transition:height .18s ease;
+}
+.hdr.is-compact .hdr__main{height:var(--header-h-compact)}
+
+/* Real brand logo artwork — white lettering, drawn for a dark ground.
+   Do not substitute a placeholder mark. */
+.logo{display:flex;align-items:center;flex:none}
+.logo img{
+  width:206px;height:auto;display:block;
+  transition:width .18s ease;
+}
+.hdr.is-compact .logo img{width:158px}
+@media (max-width:860px){ .logo img{width:170px} }
+@media (max-width:420px){ .logo img{width:140px} }
+
+.search{position:relative;max-width:560px;width:100%;justify-self:center}
+.search__field{
+  display:flex;align-items:center;gap:10px;background:var(--hdr-field);
+  border:1.5px solid rgba(255,255,255,.16);border-radius:var(--radius);padding:0 14px;height:46px;
+  transition:height .18s ease,border-color .15s ease,background .15s ease;
+}
+.hdr.is-compact .search__field{height:38px}
+.search__field:focus-within{background:#fff;border-color:var(--brand-accent)}
+.search__field:focus-within .search__ico{color:var(--text-muted)}
+.search__field:focus-within input{color:var(--text)}
+.search__field input{border:0;background:none;outline:none;flex:1;font-size:14.5px;min-width:0;color:#fff}
+.search__field input::placeholder{color:var(--hdr-muted)}
+.search__ico{flex:none;color:var(--hdr-muted)}
+.sugg{
+  position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;
+  border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-md);
+  padding:6px;display:none;
+}
+.sugg.is-open{display:block}
+.sugg a{display:flex;justify-content:space-between;gap:12px;padding:9px 12px;border-radius:7px;font-size:14px}
+.sugg a:hover,.sugg a:focus-visible{background:var(--bg-alt)}
+.sugg em{font-style:normal;color:var(--text-muted);font-size:12.5px}
+
+.hdr__tools{display:flex;align-items:center;gap:6px}
+.tool{
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;border-radius:8px;
+  font-size:11px;font-weight:600;color:var(--hdr-text);position:relative;
+}
+.tool:hover{background:rgba(255,255,255,.1)}
+.tool span{white-space:nowrap}
+.hdr.is-compact .tool span{display:none}
+.badge{
+  position:absolute;top:1px;right:4px;min-width:17px;height:17px;padding:0 4px;
+  background:var(--brand-accent);color:#fff;border-radius:99px;
+  font-size:10.5px;font-weight:700;display:grid;place-items:center;
+}
+.vat{
+  display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+  color:var(--hdr-muted);border-left:1px solid var(--hdr-line);padding-left:14px;margin-left:6px;
+}
+.vat button{
+  position:relative;width:40px;height:22px;border-radius:99px;background:rgba(255,255,255,.22);transition:background .15s;
+}
+.vat button::after{
+  content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;
+  background:#fff;box-shadow:var(--shadow-sm);transition:transform .15s;
+}
+.vat button[aria-pressed="true"]{background:var(--brand-eco)}
+.vat button[aria-pressed="true"]::after{transform:translateX(18px)}
+
+.burger{display:none;padding:8px;border-radius:8px;color:var(--hdr-text)}
+.burger:hover{background:rgba(255,255,255,.1)}
+
+/* --- mega menu ----------------------------------------------------- */
+.nav{border-top:1px solid var(--hdr-line)}
+.hdr.is-compact .nav{display:none}
+.nav__list{display:flex;gap:2px;list-style:none;margin:0;padding:0}
+.nav__item{position:static}
+.nav__btn{
+  display:flex;align-items:center;gap:5px;padding:12px 13px;font-size:14px;font-weight:600;
+  color:var(--hdr-text);border-bottom:2.5px solid transparent;
+}
+.nav__btn:hover,.nav__item.is-open .nav__btn{color:#fff;border-bottom-color:var(--brand-accent)}
+.nav__btn .chev{transition:transform .15s}
+.nav__item.is-open .nav__btn .chev{transform:rotate(180deg)}
+.mega{
+  position:absolute;left:0;right:0;top:100%;background:#fff;border-top:1px solid var(--line);
+  box-shadow:var(--shadow-md);padding:28px 0 32px;display:none;z-index:99;
+}
+.nav__item.is-open .mega{display:block}
+.mega__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+.mega h4{margin:0 0 10px;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted)}
+.mega ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.mega a{font-size:14px;color:var(--brand-ink-soft);display:inline-block;padding:1px 0}
+.mega a:hover{color:var(--brand-accent)}
+.mega__promo{
+  grid-column:span 1;background:var(--brand-accent-soft);border-radius:var(--radius);padding:18px;
+  display:flex;flex-direction:column;justify-content:space-between;gap:14px;
+}
+.mega__promo b{display:block;font-size:15px;color:var(--brand-ink);margin-bottom:4px}
+.mega__promo p{margin:0;font-size:13px;color:var(--brand-ink-soft)}
+
+/* --- mobile drawer ------------------------------------------------- */
+.drawer{
+  position:fixed;inset:0;z-index:150;display:none;
+}
+.drawer.is-open{display:block}
+.drawer__scrim{position:absolute;inset:0;background:rgba(15,29,46,.5)}
+.drawer__panel{
+  position:absolute;top:0;left:0;bottom:0;width:min(88vw,360px);background:#fff;
+  display:flex;flex-direction:column;
+}
+.drawer__top{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--line)}
+.drawer__body{overflow-y:auto;padding:8px 0;flex:1}
+.drawer__body a{display:block;padding:13px 20px;font-size:15px;font-weight:600;border-bottom:1px solid var(--bg-alt)}
+.drawer__body a:hover{background:var(--bg-alt)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  background:
+    radial-gradient(120% 90% at 88% 8%,rgba(229,14,70,.42) 0%,rgba(229,14,70,0) 58%),
+    linear-gradient(140deg,#2b2d2a 0%,#373a36 52%,#4a4e48 100%);
+  color:#fff;overflow:hidden;
+}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:64px 0 68px}
+.hero h1{font-size:clamp(30px,4.4vw,52px);line-height:1.06;letter-spacing:-.03em;margin:0 0 16px}
+.hero h1 em{font-style:normal;color:#ff7095}
+.hero p.lede{font-size:17.5px;line-height:1.55;color:#c9ccc6;margin:0 0 26px;max-width:52ch}
+.hero__cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
+.hero__proof{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font-size:13.5px;color:#c9ccc6}
+.stars{display:inline-flex;gap:2px;color:var(--brand-yellow)}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.16);border-radius:99px;padding:6px 13px;font-weight:600;font-size:13px;
+}
+.hero__art{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.hero__card{
+  aspect-ratio:1/1;border-radius:var(--radius-lg);position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;padding:14px;color:#fff;font-weight:650;font-size:13.5px;
+  box-shadow:var(--shadow-md);
+}
+.hero__card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45),transparent 55%)}
+.hero__card span{position:relative;z-index:1}
+.hc1{background:linear-gradient(135deg,#b00b36,#e8517c)}
+.hc2{background:linear-gradient(135deg,#3f6d0b,#8bbb4e);margin-top:26px}
+.hc3{background:linear-gradient(135deg,#2a6c7c,#6fb0bf)}
+.hc4{background:linear-gradient(135deg,#4a4e48,#8d918a);margin-top:26px}
+
+/* ============================================================
+   USP / DELIVERY PROMISE BAR
+   ============================================================ */
+.usp{background:#fff;border-bottom:1px solid var(--line)}
+.usp__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:20px 0}
+.usp__item{display:flex;align-items:center;gap:12px;padding:6px 12px}
+.usp__ico{
+  width:40px;height:40px;border-radius:10px;flex:none;display:grid;place-items:center;
+  background:var(--brand-accent-soft);color:var(--brand-accent);
+}
+.usp__item b{display:block;font-size:14px;color:var(--brand-ink);line-height:1.3}
+.usp__item small{color:var(--text-muted);font-size:12.5px}
+
+/* ============================================================
+   CATEGORY TILES
+   ============================================================ */
+.tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.tile{
+  border-radius:var(--radius-lg);overflow:hidden;background:#fff;border:1px solid var(--line);
+  transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
+}
+.tile:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:transparent}
+.tile__img{aspect-ratio:4/3;position:relative}
+.tile__img span{
+  position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.9);color:var(--brand-ink);
+  font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:5px;
+}
+.tile__body{padding:12px 14px 14px}
+.tile__body b{display:block;font-size:14.5px;color:var(--brand-ink)}
+.tile__body small{color:var(--text-muted);font-size:12.5px}
+.t1{background:linear-gradient(135deg,#fbd7e1,#f4a0b8)}
+.t2{background:linear-gradient(135deg,#e2eed2,#b3d189)}
+.t3{background:linear-gradient(135deg,#e9e9e7,#bcbeb9)}
+.t4{background:linear-gradient(135deg,#d7e8ec,#9dc6cf)}
+.t5{background:linear-gradient(135deg,#fbf7cf,#e5dc7c)}
+.t6{background:linear-gradient(135deg,#e6dfe1,#bda3ab)}
+
+/* ============================================================
+   PRODUCT CAROUSEL
+   ============================================================ */
+.carousel{position:relative}
+.carousel__track{
+  display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 3*16px)/4);gap:16px;
+  overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+  padding-bottom:6px;scrollbar-width:none;
+}
+.carousel__track::-webkit-scrollbar{display:none}
+.card{
+  scroll-snap-align:start;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:box-shadow .15s ease,border-color .15s ease;
+}
+.card:hover{box-shadow:var(--shadow-md);border-color:transparent}
+.card__img{aspect-ratio:1/1;position:relative}
+.card__flag{
+  position:absolute;top:10px;left:10px;background:var(--brand-accent);color:#fff;
+  font-size:11px;font-weight:700;padding:3px 8px;border-radius:5px;
+}
+.card__flag--eco{background:var(--brand-eco)}
+.card__body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card__name{font-size:14.5px;font-weight:650;color:var(--brand-ink);line-height:1.35;margin:0}
+.card__price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card__price b{font-size:19px;color:var(--brand-ink);letter-spacing:-.02em}
+.card__price .from{font-size:12px;color:var(--text-muted);font-weight:600}
+.card__price del{font-size:13px;color:var(--text-muted)}
+.card__price .vatnote{font-size:11px;color:var(--text-muted);width:100%}
+.card__meta{display:flex;flex-direction:column;gap:6px;margin-top:auto;padding-top:4px}
+.swatches{display:flex;align-items:center;gap:5px}
+.sw{width:15px;height:15px;border-radius:50%;border:1px solid rgba(0,0,0,.12)}
+.swatches em{font-style:normal;font-size:12px;color:var(--text-muted);font-weight:600;margin-left:2px}
+.lead{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--brand-eco);font-weight:600}
+.card--nolead .lead{display:none}
+
+.carousel__nav{display:flex;gap:8px}
+.cbtn{
+  width:38px;height:38px;border-radius:50%;border:1.5px solid var(--line);background:#fff;
+  display:grid;place-items:center;color:var(--brand-ink);transition:.15s;
+}
+.cbtn:hover:not(:disabled){border-color:var(--brand-ink);background:var(--brand-ink);color:#fff}
+.cbtn:disabled{opacity:.35;cursor:not-allowed}
+
+/* ============================================================
+   TABBED PRODUCT SECTIONS — popular / eco
+   ============================================================ */
+.tabsec--popular{background:var(--bg)}
+.tabsec--eco{background:#f2f7ea}
+.tabsec .sec-head{margin-bottom:18px}
+.tabsec__rail{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:4px 0 18px;margin-bottom:6px}
+.tabsec__rail::-webkit-scrollbar{display:none}
+.tabpill{
+  flex:none;padding:9px 18px;border-radius:999px;white-space:nowrap;
+  font-size:14px;font-weight:650;color:var(--brand-ink-soft);
+  border:1.5px solid var(--line);background:#fff;
+  transition:background .15s ease,color .15s ease,border-color .15s ease;
+}
+.tabpill:hover{border-color:var(--brand-ink);color:var(--brand-ink)}
+.tabsec--popular .tabpill.is-active{background:var(--brand-accent);border-color:var(--brand-accent);color:#fff}
+.tabsec--eco .tabpill.is-active{background:var(--brand-eco);border-color:var(--brand-eco);color:#fff}
+.tabsec__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.card__badges{position:absolute;top:10px;left:10px;z-index:2;display:flex;flex-wrap:wrap;gap:4px}
+.card__badges .card__flag{position:static}
+.card__flag--uk{background:var(--brand-teal)}
+.card__flag--express{background:var(--brand-ink)}
+.card__flag--value{background:var(--brand-ink-soft)}
+
+/* ============================================================
+   REVIEWS
+   ============================================================ */
+.reviews__grid{display:grid;grid-template-columns:300px minmax(0,1fr);gap:40px;align-items:center}
+.rating{text-align:center;background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px 20px}
+.rating__score{font-size:46px;font-weight:800;color:var(--brand-ink);line-height:1;letter-spacing:-.03em}
+.rating__stars{font-size:19px;margin:8px 0 6px}
+.rating__count{font-size:13.5px;color:var(--text-muted)}
+.rating__src{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:12.5px;color:var(--text-muted)}
+.rating__src b{color:var(--brand-eco)}
+
+.quotes{position:relative;min-height:190px}
+.quote{display:none}
+.quote.is-active{display:block}
+.quote blockquote{margin:0 0 14px;font-size:18px;line-height:1.55;color:var(--brand-ink)}
+.quote figcaption{font-size:13.5px;color:var(--text-muted)}
+.quote figcaption b{color:var(--brand-ink)}
+.quote .verified{color:var(--brand-eco);font-weight:600;margin-left:6px}
+.quotes__dots{display:flex;gap:7px;margin-top:20px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line);transition:.15s}
+.dot[aria-current="true"]{background:var(--brand-accent);width:22px;border-radius:99px}
+
+/* ============================================================
+   LOGO WALL + ACCREDITATIONS
+   ============================================================ */
+.logos{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.logo-cell{
+  height:72px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  display:grid;place-items:center;color:var(--text-muted);font-weight:700;font-size:13.5px;
+  letter-spacing:.02em;transition:.15s;
+}
+.logo-cell:hover{border-color:var(--brand-ink);color:var(--brand-ink)}
+
+.accred{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center}
+.accred a,.accred span{
+  display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);
+  border-radius:99px;padding:10px 18px;font-size:13.5px;font-weight:650;color:var(--brand-ink);
+}
+.accred a:hover{border-color:var(--brand-eco);color:var(--brand-eco)}
+.accred .mark{width:26px;height:26px;border-radius:50%;background:var(--brand-accent-soft);display:grid;place-items:center;font-size:12px}
+
+/* ============================================================
+   BLOG + NEWSLETTER + FOOTER
+   ============================================================ */
+.posts{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.post{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;transition:.15s}
+.post:hover{box-shadow:var(--shadow-md);border-color:transparent}
+.post__img{aspect-ratio:16/9}
+.post__body{padding:18px}
+.post__body time{font-size:12px;color:var(--text-muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.post__body h3{margin:8px 0 8px;font-size:17px;line-height:1.35;color:var(--brand-ink)}
+.post__body p{margin:0;font-size:14px;color:var(--text-muted);line-height:1.5}
+.p1{background:linear-gradient(135deg,#fbd7e1,#efa9bd)}
+.p2{background:linear-gradient(135deg,#e2eed2,#b9d494)}
+.p3{background:linear-gradient(135deg,#d7e8ec,#a4cad2)}
+
+.news{background:var(--bg-deep);color:#fff}
+.news__grid{display:grid;grid-template-columns:1fr minmax(0,520px);gap:40px;align-items:center;padding:52px 0}
+.news h2{font-size:clamp(22px,2.6vw,30px);margin:0 0 8px;letter-spacing:-.02em}
+.news p{margin:0;color:#c9ccc6;font-size:15.5px}
+.news__form{display:flex;gap:10px;flex-wrap:wrap}
+.news__form input{
+  flex:1;min-width:220px;height:52px;border-radius:var(--radius);border:1.5px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.08);color:#fff;padding:0 16px;font-size:15px;outline:none;
+}
+.news__form input::placeholder{color:#9a9a9a}
+.news__form input:focus{border-color:#fff;background:rgba(255,255,255,.14)}
+.news__form input[aria-invalid="true"]{border-color:#ff8a6b}
+.news__msg{width:100%;font-size:13.5px;min-height:20px;margin-top:2px}
+.news__msg.ok{color:#7fe0b0}
+.news__msg.err{color:#ff9c80}
+
+.ftr{background:#262826;color:#9a9a9a;font-size:14px}
+.ftr__grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:36px;padding:52px 0 36px}
+.ftr h4{color:#fff;font-size:13px;letter-spacing:.07em;text-transform:uppercase;margin:0 0 14px}
+.ftr ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.ftr a:hover{color:#fff}
+.ftr__bottom{border-top:1px solid rgba(255,255,255,.09);padding:18px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px}
+
+/* ============================================================
+   RESPONSIVE — 768px tablet, 375px mobile
+   ============================================================ */
+@media (max-width:1024px){
+  .hero__grid{grid-template-columns:1fr;gap:36px;padding:48px 0 52px}
+  .hero__art{max-width:460px}
+  .tiles{grid-template-columns:repeat(3,1fr)}
+  .carousel__track{grid-auto-columns:calc((100% - 2*16px)/3)}
+  .tabsec__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .logos{grid-template-columns:repeat(4,1fr)}
+  .reviews__grid{grid-template-columns:1fr;gap:28px}
+  .news__grid{grid-template-columns:1fr;gap:24px}
+  .ftr__grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:860px){
+  .nav,.vat,.tool span{display:none}
+  .burger{display:block}
+  .hdr__main{grid-template-columns:auto auto 1fr auto;gap:12px}
+  .search{grid-column:1/-1;order:3;max-width:none;padding-bottom:12px}
+  .hdr__main{height:auto;padding:12px 0}
+  .hdr.is-compact .hdr__main{height:auto}
+  .hdr.is-compact .search{display:block}
+  .usp__grid{grid-template-columns:repeat(2,1fr)}
+  .posts{grid-template-columns:1fr}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .carousel__track{grid-auto-columns:calc((100% - 16px)/2)}
+}
+@media (max-width:560px){
+  .sec{padding:40px 0}
+  .hero__art{grid-template-columns:repeat(2,1fr)}
+  .tiles{grid-template-columns:1fr}
+  .carousel__track{grid-auto-columns:78%}
+  .tabsec__grid{grid-template-columns:1fr}
+  .logos{grid-template-columns:repeat(2,1fr)}
+  .usp__grid{grid-template-columns:1fr}
+  .ftr__grid{grid-template-columns:1fr}
+  .hero__cta .btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ========================= PROMO BAR ========================= -->
+<div class="promo">10% off your first order — use code <strong>RFX10QR</strong></div>
+
+<!-- ========================= STICKY HEADER ========================= -->
+<header class="hdr" id="hdr">
+  <div class="anno">sc-01 · header</div>
+  <div class="wrap">
+    <div class="hdr__main">
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+
+      <a class="logo" href="#top">
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAABHCAYAAAA5mspfAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFF2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNy4xLWMwMDAgNzkuN2E3YTIzNiwgMjAyMS8wOC8xMi0wMDoyNToyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIyLjUgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMi0wNy0xMlQxMjowMDoyNiswMTowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjItMDctMTJUMTI6MDE6NTUrMDE6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDctMTJUMTI6MDE6NTUrMDE6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6YWJjMmJjNTgtYjkwMi1k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" width="240" height="71" alt="Bounce Creative Designs | Promotional Products">
+      </a>
+
+      <div class="search">
+        <label class="sr-only" for="q">Search products</label>
+        <div class="search__field">
+          <svg class="search__ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
+          <input id="q" type="search" autocomplete="off" placeholder="Search product, brand, colour or code">
+        </div>
+        <div class="sugg" id="sugg" role="listbox" aria-label="Search suggestions">
+          <a href="#" role="option"><span>Branded water bottles</span><em>412 products</em></a>
+          <a href="#" role="option"><span>Recycled tote bags</span><em>168 products</em></a>
+          <a href="#" role="option"><span>Printed pens</span><em>903 products</em></a>
+          <a href="#" role="option"><span>Moleskine notebooks</span><em>Brand</em></a>
+        </div>
+      </div>
+
+      <div class="hdr__tools">
+        <a class="tool" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5" stroke-linecap="round"/></svg><span>Account</span></a>
+        <a class="tool" href="#"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20s-7-4.4-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.6-7 9-7 9Z" stroke-linejoin="round"/></svg><span>Wishlist</span></a>
+        <a class="tool" href="#"><span class="badge">3</span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h12l-1 13H7L6 7Z" stroke-linejoin="round"/><path d="M9 7a3 3 0 0 1 6 0" stroke-linecap="round"/></svg><span>Basket</span></a>
+        <div class="vat">
+          <span>Ex VAT</span>
+          <button id="vat" type="button" aria-pressed="false" aria-label="Toggle VAT display"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- mega menu -->
+  <nav class="nav" aria-label="Product categories">
+    <div class="wrap">
+      <ul class="nav__list">
+        <li class="nav__item" data-menu>
+          <button class="nav__btn" aria-expanded="false">Bags <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6" stroke-linecap="round"/></svg></button>
+          <div class="mega"><div class="wrap"><div class="mega__grid">
+            <div><h4>Shopping &amp; retail</h4><ul><li><a href="#">Tote bags</a></li><li><a href="#">Jute bags</a></li><li><a href="#">Paper bags</a></li><li><a href="#">Cotton bags</a></li></ul></div>
+            <div><h4>Work &amp; travel</h4><ul><li><a href="#">Laptop bags</a></li><li><a href="#">Backpacks</a></li><li><a href="#">Holdalls</a></li><li><a href="#">Trolley cases</a></li></ul></div>
+            <div><h4>Eco &amp; natural</h4><ul><li><a href="#">Recycled RPET</a></li><li><a href="#">GRS certified</a></li><li><a href="#">Organic cotton</a></li></ul></div>
+            <div class="mega__promo"><div><b>Build a branded store</b><p>Fulfilment and webshops for teams of any size.</p></div><a class="btn btn--primary" href="#">Find out more</a></div>
+          </div></div></div>
+        </li>
+        <li class="nav__item" data-menu>
+          <button class="nav__btn" aria-expanded="false">Drinkware <svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m6 9 6 6 6-6" stroke-linecap="round"/></svg></button>
+          <div class="mega"><div class="wrap"><div class="mega__grid">
+            <div><h4>Bottles</h4><ul><li><a href="#">Stainless steel</a></li><li><a href="#">Tritan</a></li><li><a href="#">Recycled RPET</a></li></ul></div>
+            <div><h4>Mugs</h4><ul><li><a href="#">Ceramic mugs</a></li><li><a href="#">Travel mugs</a></li><li><a href="#">Enamel mugs</a></li></ul></div>
+            <div><h4>Barware</h4><ul><li><a href="#">Tumblers</a></li><li><a href="#">Flasks</a></li><li><a href="#">Coasters</a></li></ul></div>
+            <div class="mega__promo"><div><b>Express drinkware</b><p>Branded and delivered in 5 working days.</p></div><a class="btn btn--primary" href="#">Shop express</a></div>
+          </div></div></div>
+        </li>
+        <li class="nav__item"><a class="nav__btn" href="#">Pens</a></li>
+        <li class="nav__item"><a class="nav__btn" href="#">Tech</a></li>
+        <li class="nav__item"><a class="nav__btn" href="#">Clothing</a></li>
+        <li class="nav__item"><a class="nav__btn" href="#">Notebooks</a></li>
+        <li class="nav__item"><a class="nav__btn" href="#">Office</a></li>
+        <li class="nav__item"><a class="nav__btn" href="#">Giveaways</a></li>
+        <li class="nav__item"><a class="nav__btn" href="#" style="color:var(--brand-eco)">Eco</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<!-- mobile drawer -->
+<div class="drawer" id="drawer">
+  <div class="drawer__scrim" data-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="drawer__top">
+      <b>Shop by category</b>
+      <button data-close aria-label="Close menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="drawer__body">
+      <a href="#">Bags</a><a href="#">Drinkware</a><a href="#">Pens</a><a href="#">Tech</a>
+      <a href="#">Clothing</a><a href="#">Notebooks</a><a href="#">Office</a><a href="#">Giveaways</a>
+      <a href="#" style="color:var(--brand-eco)">Eco</a>
+    </div>
+  </div>
+</div>
+
+<main id="top">
+
+<!-- ========================= HERO ========================= -->
+<section class="hero">
+  <div class="anno">sc-02 · hero</div>
+  <div class="wrap"><div class="hero__grid">
+    <div>
+      <h1>Branded merchandise that <em>lands on time</em>, every time.</h1>
+      <p class="lede">Over 20,000 promotional products, printed with your logo and delivered across the UK — with a named account manager on every order.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#carousel">Shop best sellers</a>
+        <a class="btn btn--onDark" href="#">Request a quote</a>
+      </div>
+      <div class="hero__proof">
+        <span class="chip"><span class="stars">★★★★★</span> 4.8 / 5 · 1,240 reviews</span>
+        <span class="chip">🚚 Express in 5 days</span>
+        <span class="chip">🇬🇧 UK print &amp; despatch</span>
+      </div>
+    </div>
+    <div class="hero__art" aria-hidden="true">
+      <div class="hero__card hc1"><span>Drinkware</span></div>
+      <div class="hero__card hc2"><span>Eco bags</span></div>
+      <div class="hero__card hc3"><span>Notebooks</span></div>
+      <div class="hero__card hc4"><span>Tech</span></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ========================= USP / DELIVERY BAR ========================= -->
+<section class="usp">
+  <div class="anno">sc-03 · usp bar</div>
+  <div class="wrap"><div class="usp__grid">
+    <div class="usp__item"><span class="usp__ico">🚚</span><span><b>Delivery from 5 days</b><small>Express options on 1,800+ lines</small></span></div>
+    <div class="usp__item"><span class="usp__ico">💷</span><span><b>Price match promise</b><small>Beat any like-for-like quote</small></span></div>
+    <div class="usp__item"><span class="usp__ico">🎨</span><span><b>Free artwork proof</b><small>Visual before you commit</small></span></div>
+    <div class="usp__item"><span class="usp__ico">✅</span><span><b>100% compliant</b><small>Fully certified &amp; audited supply</small></span></div>
+  </div></div>
+</section>
+
+<!-- ========================= CATEGORY TILES ========================= -->
+<section class="sec">
+  <div class="anno">sc-04 · category tiles</div>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2 class="h-sec">Shop by category</h2><p class="sub-sec">Every range printed, embroidered or engraved with your brand.</p></div>
+      <a class="link-more" href="#">All categories →</a>
+    </div>
+    <div class="tiles">
+      <a class="tile" href="#"><div class="tile__img t1"><span>from £1.05</span></div><div class="tile__body"><b>Drinkware</b><small>1,240 products</small></div></a>
+      <a class="tile" href="#"><div class="tile__img t2"><span>from £0.64</span></div><div class="tile__body"><b>Eco &amp; recycled</b><small>2,180 products</small></div></a>
+      <a class="tile" href="#"><div class="tile__img t3"><span>from £1.92</span></div><div class="tile__body"><b>Notebooks</b><small>760 products</small></div></a>
+      <a class="tile" href="#"><div class="tile__img t4"><span>from £0.21</span></div><div class="tile__body"><b>Pens</b><small>903 products</small></div></a>
+      <a class="tile" href="#"><div class="tile__img t5"><span>from £2.40</span></div><div class="tile__body"><b>Bags</b><small>1,510 products</small></div></a>
+      <a class="tile" href="#"><div class="tile__img t6"><span>from £3.15</span></div><div class="tile__body"><b>Tech</b><small>640 products</small></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= PRODUCT CAROUSEL ========================= -->
+<section class="sec sec--alt" id="carousel">
+  <div class="anno">sc-05 · product carousel</div>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2 class="h-sec">Best sellers this month</h2><p class="sub-sec">Prices shown from, excluding VAT, based on the lowest quantity break.</p></div>
+      <div class="carousel__nav">
+        <button class="cbtn" data-car-prev aria-label="Previous products"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m15 5-7 7 7 7" stroke-linecap="round"/></svg></button>
+        <button class="cbtn" data-car-next aria-label="Next products"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m9 5 7 7-7 7" stroke-linecap="round"/></svg></button>
+      </div>
+    </div>
+
+    <div class="carousel" data-carousel>
+      <div class="carousel__track" tabindex="0" role="group" aria-label="Best selling products">
+
+        <a class="card" href="#">
+          <div class="card__img t1"><span class="card__flag">Save 15%</span></div>
+          <div class="card__body">
+            <p class="card__name">Vinga Balti Recycled Steel Bottle 500ml</p>
+            <div class="card__price"><span class="from">from</span><b>£6.84</b><del>£8.05</del><span class="vatnote">ex VAT · 50 minimum</span></div>
+            <div class="card__meta">
+              <div class="swatches"><i class="sw" style="background:#1c1c1c"></i><i class="sw" style="background:#c0392b"></i><i class="sw" style="background:#2f7d63"></i><em>+5 colours</em></div>
+              <div class="lead">🚚 Est. delivery 20 Aug</div>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="#">
+          <div class="card__img t2"><span class="card__flag card__flag--eco">GRS certified</span></div>
+          <div class="card__body">
+            <p class="card__name">Impact AWARE Recycled Cotton Tote 145g</p>
+            <div class="card__price"><span class="from">from</span><b>£2.41</b><span class="vatnote">ex VAT · 100 minimum</span></div>
+            <div class="card__meta">
+              <div class="swatches"><i class="sw" style="background:#e8e2d4"></i><i class="sw" style="background:#23395b"></i><em>+3 colours</em></div>
+              <div class="lead">🚚 Est. delivery 18 Aug</div>
+            </div>
+          </div>
+        </a>
+
+        <a class="card card--nolead" href="#">
+          <div class="card__img t3"></div>
+          <div class="card__body">
+            <p class="card__name">Moleskine Classic Hard Cover Notebook A5</p>
+            <div class="card__price"><span class="from">from</span><b>£16.20</b><span class="vatnote">ex VAT · 25 minimum</span></div>
+            <div class="card__meta">
+              <div class="swatches"><i class="sw" style="background:#1c1c1c"></i><i class="sw" style="background:#8a1c1c"></i><i class="sw" style="background:#2b5c8a"></i><em>+9 colours</em></div>
+              <div class="lead">🚚 Est. delivery 22 Aug</div>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="#">
+          <div class="card__img t4"><span class="card__flag">Best seller</span></div>
+          <div class="card__body">
+            <p class="card__name">BIC Super Clip Ballpoint Pen</p>
+            <div class="card__price"><span class="from">from</span><b>£0.21</b><del>£0.26</del><span class="vatnote">ex VAT · 250 minimum</span></div>
+            <div class="card__meta">
+              <div class="swatches"><i class="sw" style="background:#2f6fd0"></i><i class="sw" style="background:#c0392b"></i><i class="sw" style="background:#1f7a5a"></i><em>+12 colours</em></div>
+              <div class="lead">🚚 Est. delivery 15 Aug</div>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="#">
+          <div class="card__img t5"></div>
+          <div class="card__body">
+            <p class="card__name">Case Logic Era 15.6" Laptop Backpack</p>
+            <div class="card__price"><span class="from">from</span><b>£48.90</b><span class="vatnote">ex VAT · 10 minimum</span></div>
+            <div class="card__meta">
+              <div class="swatches"><i class="sw" style="background:#23395b"></i><i class="sw" style="background:#1c1c1c"></i><em>+1 colour</em></div>
+              <div class="lead">🚚 Est. delivery 26 Aug</div>
+            </div>
+          </div>
+        </a>
+
+        <a class="card" href="#">
+          <div class="card__img t6"><span class="card__flag card__flag--eco">Low carbon</span></div>
+          <div class="card__body">
+            <p class="card__name">Ukiyo Bamboo Wireless Charger 10W</p>
+            <div class="card__price"><span class="from">from</span><b>£11.35</b><del>£13.10</del><span class="vatnote">ex VAT · 25 minimum</span></div>
+            <div class="card__meta">
+              <div class="swatches"><i class="sw" style="background:#c8a97e"></i><em>+2 colours</em></div>
+              <div class="lead">🚚 Est. delivery 21 Aug</div>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= OUR POPULAR PRODUCTS ========================= -->
+<section class="sec tabsec tabsec--popular" id="popular">
+  <div class="anno">sc-05b · tabbed grid · our_popular_product attribute</div>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2 class="h-sec">Our Popular Products</h2><p class="sub-sec">The categories customers buy most — four best performers in each, priced from the lowest quantity break.</p></div>
+    </div>
+
+    <div class="tabsec__rail" role="tablist" aria-label="Our Popular Products" data-tabrail>
+      <button class="tabpill is-active" role="tab" aria-selected="true" data-tab="p1">Gift Boxes</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="p2">Notebooks</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="p3">Pens</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="p4">Bags</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="p5">Bottles</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="p6">Mugs</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="p7">Umbrellas</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="p8">Clothing</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="p9">Chargers</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="p10">Tech</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="p11">Home</button>
+    </div>
+
+    <div class="tabsec__grid" role="tabpanel" data-tabpanel="p1">
+      <a class="card card--nolead" href="#">
+        <div class="card__img t1"></div>
+        <div class="card__body">
+          <p class="card__name">Gift Card Box With Magnetic Closure HAKO</p>
+          <div class="card__price"><span class="from">from</span><b>£1.50</b><span class="vatnote">ex VAT · mid-MO6666</span></div>
+        </div>
+      </a>
+      <a class="card card--nolead" href="#">
+        <div class="card__img t3"></div>
+        <div class="card__body">
+          <p class="card__name">Cocktail Drinks Gift Set NIGHT</p>
+          <div class="card__price"><span class="from">from</span><b>£6.94</b><span class="vatnote">ex VAT · mid-MO6620-16</span></div>
+        </div>
+      </a>
+      <a class="card card--nolead" href="#">
+        <div class="card__img t4"></div>
+        <div class="card__body">
+          <p class="card__name">Glass Kitchen Oil Spray Bottle FUNSHA</p>
+          <div class="card__price"><span class="from">from</span><b>£1.38</b><span class="vatnote">ex VAT · mid-MO6630-22</span></div>
+        </div>
+      </a>
+      <a class="card card--nolead" href="#">
+        <div class="card__img t2"><div class="card__badges"><span class="card__flag card__flag--eco">Eco</span></div></div>
+        <div class="card__body">
+          <p class="card__name">Nut Cracker Gift Set With Bamboo Bowl NUEZ</p>
+          <div class="card__price"><span class="from">from</span><b>£4.94</b><span class="vatnote">ex VAT · mid-MO6648-40</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= OUR ECO PRODUCTS ========================= -->
+<section class="sec tabsec tabsec--eco" id="eco">
+  <div class="anno">sc-05c · tabbed grid · our_eco_product attribute</div>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2 class="h-sec">Our Eco Products</h2><p class="sub-sec">Recycled, plant-based and low-carbon ranges, grouped by the material they are made from.</p></div>
+    </div>
+
+    <div class="tabsec__rail" role="tablist" aria-label="Our Eco Products" data-tabrail>
+      <button class="tabpill is-active" role="tab" aria-selected="true" data-tab="e1">Vegan</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="e2">Bamboo</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="e3">Wheat Straw</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="e4">Cork</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="e5">Organic</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="e6">Glass</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="e7">PVC free</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="e8">REPT</button>
+      <button class="tabpill" role="tab" aria-selected="false" data-tab="e9">Recycled</button>
+    </div>
+
+    <div class="tabsec__grid" role="tabpanel" data-tabpanel="e1">
+      <a class="card card--nolead" href="#">
+        <div class="card__img t3"></div>
+        <div class="card__body">
+          <p class="card__name">Tierra 2pcs straw and cutlery set in pouch</p>
+          <div class="card__price"><span class="from">from</span><b>£1.50</b><span class="vatnote">ex VAT · xin-P269.55</span></div>
+        </div>
+      </a>
+      <a class="card card--nolead" href="#">
+        <div class="card__img t2"><div class="card__badges"><span class="card__flag card__flag--eco">Eco</span><span class="card__flag card__flag--eco">Low carbon</span></div></div>
+        <div class="card__body">
+          <p class="card__name">Swiss Peak deluxe vegan leather laptop backpack</p>
+          <div class="card__price"><span class="from">from</span><b>£29.05</b><span class="vatnote">ex VAT · xin-P762.561</span></div>
+        </div>
+      </a>
+      <a class="card card--nolead" href="#">
+        <div class="card__img t5"></div>
+        <div class="card__body">
+          <p class="card__name">VINGA Asado Apron</p>
+          <div class="card__price"><span class="from">from</span><b>£14.26</b><span class="vatnote">ex VAT · xin-V215</span></div>
+        </div>
+      </a>
+      <a class="card card--nolead" href="#">
+        <div class="card__img t4"><div class="card__badges"><span class="card__flag card__flag--eco">Eco</span></div></div>
+        <div class="card__body">
+          <p class="card__name">VINGA Baltimore Weekend bag</p>
+          <div class="card__price"><span class="from">from</span><b>£30.14</b><span class="vatnote">ex VAT · xin-V5002</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= REVIEWS ========================= -->
+<section class="sec">
+  <div class="anno">sc-06 · reviews</div>
+  <div class="wrap">
+    <div class="sec-head"><div><h2 class="h-sec">What our customers say</h2><p class="sub-sec">Independently collected and verified.</p></div></div>
+    <div class="reviews__grid">
+      <div class="rating">
+        <div class="rating__score">4.8</div>
+        <div class="rating__stars stars">★★★★★</div>
+        <div class="rating__count">Based on 1,240 reviews</div>
+        <div class="rating__src">Verified by <b>Trustpilot</b></div>
+      </div>
+      <div>
+        <div class="quotes" id="quotes">
+          <figure class="quote is-active">
+            <blockquote>“Ordered 500 branded bottles on a tight deadline for a conference. The proof came back the same afternoon and the pallet landed two days early.”</blockquote>
+            <figcaption><b>Rachel M.</b> — Events Manager, Manchester <span class="verified">✓ Verified</span></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“We compared four suppliers. Bounce were not the cheapest on paper, but they were the only ones who told us the real lead time up front.”</blockquote>
+            <figcaption><b>Daniel O.</b> — Marketing Lead, Bristol <span class="verified">✓ Verified</span></figcaption>
+          </figure>
+          <figure class="quote">
+            <blockquote>“The eco range actually has the certificates behind it. Our procurement team signed it off without a single follow-up question.”</blockquote>
+            <figcaption><b>Priya S.</b> — Procurement, London <span class="verified">✓ Verified</span></figcaption>
+          </figure>
+        </div>
+        <div class="quotes__dots" id="dots" role="tablist" aria-label="Testimonials">
+          <button class="dot" role="tab" aria-current="true" aria-label="Testimonial 1"></button>
+          <button class="dot" role="tab" aria-current="false" aria-label="Testimonial 2"></button>
+          <button class="dot" role="tab" aria-current="false" aria-label="Testimonial 3"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= CLIENT LOGO WALL ========================= -->
+<section class="sec sec--alt">
+  <div class="anno">sc-07 · logo wall</div>
+  <div class="wrap">
+    <div class="sec-head"><div><h2 class="h-sec">Trusted by brands you know</h2><p class="sub-sec">A merge of the two brand blocks live on the homepage today.</p></div></div>
+    <div class="logos">
+      <div class="logo-cell">Coca-Cola</div><div class="logo-cell">Amazon</div><div class="logo-cell">Virgin Atlantic</div>
+      <div class="logo-cell">British Airways</div><div class="logo-cell">Savills</div><div class="logo-cell">Superdrug</div>
+      <div class="logo-cell">easyJet</div><div class="logo-cell">Google Nest</div><div class="logo-cell">boohoo</div>
+      <div class="logo-cell">BP</div><div class="logo-cell">American Airlines</div><div class="logo-cell">Moleskine</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= ACCREDITATIONS ========================= -->
+<section class="sec">
+  <div class="anno">sc-08 · accreditations</div>
+  <div class="wrap">
+    <div class="sec-head"><div><h2 class="h-sec">Certified and accountable</h2><p class="sub-sec">Badges with a verification link open the accrediting body; those without are not selectable.</p></div></div>
+    <div class="accred">
+      <a href="#"><span class="mark">🏅</span> BPMA Member</a>
+      <a href="#"><span class="mark">📋</span> ISO 9001</a>
+      <a href="#"><span class="mark">♻️</span> Global Recycled Standard</a>
+      <a href="#"><span class="mark">🌲</span> FSC Certified</a>
+      <span><span class="mark">🤝</span> Sedex Audited</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= BLOG TEASERS ========================= -->
+<section class="sec sec--alt">
+  <div class="anno">sc-09 · blog teasers</div>
+  <div class="wrap">
+    <div class="sec-head">
+      <div><h2 class="h-sec">Ideas and guides</h2><p class="sub-sec">Served from a Magento-side source — no WordPress call on this page.</p></div>
+      <a class="link-more" href="#">All articles →</a>
+    </div>
+    <div class="posts">
+      <a class="post" href="#"><div class="post__img p1"></div><div class="post__body"><time>04 Aug 2026</time><h3>Choosing branded drinkware that people actually keep</h3><p>Material, lid type and print method — what changes retention.</p></div></a>
+      <a class="post" href="#"><div class="post__img p2"></div><div class="post__body"><time>28 Jul 2026</time><h3>What GRS certification really covers</h3><p>Reading a recycled-content claim without getting caught out.</p></div></a>
+      <a class="post" href="#"><div class="post__img p3"></div><div class="post__body"><time>19 Jul 2026</time><h3>Lead times explained: print, despatch and the gap between</h3><p>Why two suppliers quote the same product five days apart.</p></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= NEWSLETTER ========================= -->
+<section class="news">
+  <div class="anno">sc-10 · newsletter</div>
+  <div class="wrap"><div class="news__grid">
+    <div>
+      <h2>Ideas, offers and new products</h2>
+      <p>One email a month. Unsubscribe any time.</p>
+    </div>
+    <form class="news__form" id="newsForm" novalidate>
+      <label class="sr-only" for="email">Email address</label>
+      <input id="email" type="email" placeholder="you@company.co.uk" autocomplete="email">
+      <button class="btn btn--primary" type="submit">Subscribe</button>
+      <div class="news__msg" id="newsMsg" role="status" aria-live="polite"></div>
+    </form>
+  </div></div>
+</section>
+
+</main>
+
+<!-- ========================= FOOTER ========================= -->
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr__grid">
+      <div>
+        <a class="logo" href="#top" style="margin-bottom:16px"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAABHCAYAAAA5mspfAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFF2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNy4xLWMwMDAgNzkuN2E3YTIzNiwgMjAyMS8wOC8xMi0wMDoyNToyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0RXZ0PSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VFdmVudCMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIDIyLjUgKFdpbmRvd3MpIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMi0wNy0xMlQxMjowMDoyNiswMTowMCIgeG1wOk1vZGlmeURhdGU9IjIwMjItMDctMTJUMTI6MDE6NTUrMDE6MDAiIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDctMTJUMTI6MDE6NTUrMDE6MDAiIGRjOmZvcm1hdD0iaW1hZ2UvcG5nIiBwaG90b3Nob3A6Q29sb3JNb2RlPSIzIiBwaG90b3Nob3A6SUNDUHJvZmlsZT0ic1JHQiBJRUM2MTk2Ni0yLjEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6YWJjMmJjNTgtYjkwMi1k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" width="240" height="71" alt="Bounce Creative Designs | Promotional Products" style="width:200px"></a>
+        <p style="margin:0;max-width:34ch">Branded merchandise, printed in the UK and delivered on the date we promise.</p>
+      </div>
+      <div><h4>About</h4><ul><li><a href="#">Our story</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Compliance</a></li><li><a href="#">Contact us</a></li></ul></div>
+      <div><h4>Help</h4><ul><li><a href="#">Request a quote</a></li><li><a href="#">Artwork guidelines</a></li><li><a href="#">Print processes</a></li><li><a href="#">FAQs</a></li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="#">Terms &amp; conditions</a></li><li><a href="#">Privacy policy</a></li><li><a href="#">Modern slavery</a></li><li><a href="#">Cookies</a></li></ul></div>
+    </div>
+    <div class="ftr__bottom"><span>© 2026 Bounce Creative Designs Ltd.</span><span>Prototype — not a live site</span></div>
+  </div>
+</footer>
+
+<div class="anno-bar">
+  <span>Homepage redesign prototype</span>
+  <button id="toggleAnno" type="button">Hide section IDs</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* ---- sticky header: compact state after the hero ---- */
+  var hdr = document.getElementById('hdr');
+  var lastY = -1;
+  function onScroll(){
+    var y = window.scrollY;
+    if (y === lastY) return;
+    lastY = y;
+    hdr.classList.toggle('is-stuck', y > 4);
+    hdr.classList.toggle('is-compact', y > 220);
+  }
+  window.addEventListener('scroll', function(){ window.requestAnimationFrame(onScroll); }, {passive:true});
+  onScroll();
+
+  /* ---- search suggestions ---- */
+  var q = document.getElementById('q'), sugg = document.getElementById('sugg');
+  q.addEventListener('input', function(){ sugg.classList.toggle('is-open', q.value.trim().length >= 3); });
+  q.addEventListener('focus', function(){ if (q.value.trim().length >= 3) sugg.classList.add('is-open'); });
+  document.addEventListener('click', function(e){
+    if (!e.target.closest('.search')) sugg.classList.remove('is-open');
+  });
+
+  /* ---- VAT toggle ---- */
+  var vat = document.getElementById('vat');
+  vat.addEventListener('click', function(){
+    var on = vat.getAttribute('aria-pressed') === 'true';
+    vat.setAttribute('aria-pressed', String(!on));
+    vat.previousElementSibling.textContent = on ? 'Ex VAT' : 'Inc VAT';
+    document.querySelectorAll('.vatnote').forEach(function(n){
+      n.textContent = n.textContent.replace(on ? 'inc VAT' : 'ex VAT', on ? 'ex VAT' : 'inc VAT');
+    });
+  });
+
+  /* ---- mega menu: click to open, Escape and outside-click to close ---- */
+  var items = Array.prototype.slice.call(document.querySelectorAll('[data-menu]'));
+  function closeAll(except){
+    items.forEach(function(it){
+      if (it === except) return;
+      it.classList.remove('is-open');
+      it.querySelector('.nav__btn').setAttribute('aria-expanded','false');
+    });
+  }
+  items.forEach(function(it){
+    var btn = it.querySelector('.nav__btn');
+    btn.addEventListener('click', function(){
+      var open = it.classList.contains('is-open');
+      closeAll(it);
+      it.classList.toggle('is-open', !open);
+      btn.setAttribute('aria-expanded', String(!open));
+    });
+    it.addEventListener('mouseenter', function(){ closeAll(it); it.classList.add('is-open'); btn.setAttribute('aria-expanded','true'); });
+    it.addEventListener('mouseleave', function(){ it.classList.remove('is-open'); btn.setAttribute('aria-expanded','false'); });
+  });
+  document.addEventListener('click', function(e){ if (!e.target.closest('[data-menu]')) closeAll(null); });
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    var open = document.querySelector('[data-menu].is-open');
+    if (open){ open.classList.remove('is-open'); open.querySelector('.nav__btn').setAttribute('aria-expanded','false'); open.querySelector('.nav__btn').focus(); }
+    document.getElementById('drawer').classList.remove('is-open');
+  });
+
+  /* ---- mobile drawer ---- */
+  var drawer = document.getElementById('drawer'), burger = document.getElementById('burger');
+  burger.addEventListener('click', function(){
+    drawer.classList.add('is-open');
+    burger.setAttribute('aria-expanded','true');
+    drawer.querySelector('.drawer__body a').focus();
+  });
+  drawer.addEventListener('click', function(e){
+    if (e.target.closest('[data-close]')){ drawer.classList.remove('is-open'); burger.setAttribute('aria-expanded','false'); burger.focus(); }
+  });
+
+  /* ---- product carousel: paging, swipe (native), keyboard ---- */
+  document.querySelectorAll('[data-carousel]').forEach(function(car){
+    var track = car.querySelector('.carousel__track');
+    var prev = document.querySelector('[data-car-prev]');
+    var next = document.querySelector('[data-car-next]');
+    function page(dir){ track.scrollBy({left: dir * track.clientWidth, behavior:'smooth'}); }
+    function sync(){
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+    }
+    prev.addEventListener('click', function(){ page(-1); });
+    next.addEventListener('click', function(){ page(1); });
+    track.addEventListener('scroll', function(){ window.requestAnimationFrame(sync); }, {passive:true});
+    track.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowRight'){ e.preventDefault(); page(1); }
+      if (e.key === 'ArrowLeft'){ e.preventDefault(); page(-1); }
+    });
+    window.addEventListener('resize', sync);
+    sync();
+  });
+
+  /* ---- tabbed product rails ---- */
+  document.querySelectorAll('[data-tabrail]').forEach(function(rail){
+    var pills = Array.prototype.slice.call(rail.querySelectorAll('.tabpill'));
+    pills.forEach(function(pill){
+      pill.addEventListener('click', function(){
+        pills.forEach(function(p){
+          var on = p === pill;
+          p.classList.toggle('is-active', on);
+          p.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+      });
+    });
+  });
+
+  /* ---- testimonials ---- */
+  var quotes = Array.prototype.slice.call(document.querySelectorAll('.quote'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('#dots .dot'));
+  dots.forEach(function(d, i){
+    d.addEventListener('click', function(){
+      quotes.forEach(function(qq, j){ qq.classList.toggle('is-active', i === j); });
+      dots.forEach(function(dd, j){ dd.setAttribute('aria-current', String(i === j)); });
+    });
+  });
+
+  /* ---- newsletter validation (mirrors the spec scenarios) ---- */
+  var known = ['taken@company.co.uk'];
+  var form = document.getElementById('newsForm');
+  var email = document.getElementById('email');
+  var msg = document.getElementById('newsMsg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var v = email.value.trim();
+    msg.className = 'news__msg';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)){
+      email.setAttribute('aria-invalid','true');
+      msg.classList.add('err');
+      msg.textContent = 'Enter a valid email address, for example you@company.co.uk';
+      return;
+    }
+    email.removeAttribute('aria-invalid');
+    if (known.indexOf(v.toLowerCase()) > -1){
+      msg.classList.add('err');
+      msg.textContent = 'This address is already subscribed.';
+      return;
+    }
+    known.push(v.toLowerCase());
+    msg.classList.add('ok');
+    msg.textContent = 'Thanks — check your inbox to confirm your subscription.';
+    email.value = '';
+  });
+
+  /* ---- annotation toggle ---- */
+  var t = document.getElementById('toggleAnno');
+  t.addEventListener('click', function(){
+    var hidden = document.body.classList.toggle('hide-anno');
+    t.textContent = hidden ? 'Show section IDs' : 'Hide section IDs';
+  });
+})();
+</script>
+</body>
+</html>

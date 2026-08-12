@@ -5,20 +5,20 @@ export default function Accreditations({ awards }) {
   return (
     <section className="sec">
       <div className="wrap">
-        <div className="sec-head">
+        <div className="sec-head sec-head--center">
           <div>
             <h2 className="h-sec">Certified and accountable</h2>
             <p className="sub-sec">we’re really proud — our awards and accreditations.</p>
           </div>
         </div>
-        <div className="accred">
+        <ul className="accred">
           {awards.map((a) => (
-            <span key={a.name}>
-              <span className="mark"><img src={asset(a.img)} alt="" loading="lazy" /></span>
-              {a.name}
-            </span>
+            <li className="accred__item" key={a.name}>
+              <span className="accred__mark"><img src={asset(a.img)} alt="" loading="lazy" /></span>
+              <span className="accred__label">{a.name}</span>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   )

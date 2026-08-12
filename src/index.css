@@ -28,12 +28,13 @@
   --text-muted:#868886;
   --text-invert:#ffffff;
 
-  /* header is dark, because the brand logo is white artwork */
-  --hdr-bg:#373a36;
-  --hdr-line:rgba(255,255,255,.13);
-  --hdr-text:#ffffff;
-  --hdr-muted:#b9bcb8;
-  --hdr-field:rgba(255,255,255,.09);
+  /* Light header. The store logo is white artwork, so the header uses a
+     recoloured charcoal variant (bounce-logo-dark.png) to stay legible. */
+  --hdr-bg:#ffffff;
+  --hdr-line:#e6e6e6;
+  --hdr-text:#373a36;
+  --hdr-muted:#7d817c;
+  --hdr-field:#f4f5f3;
 
   --radius:10px;
   --radius-lg:16px;
@@ -101,15 +102,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   border-bottom:1px solid var(--hdr-line);
   transition:box-shadow .18s ease;
 }
-.hdr.is-stuck{box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.hdr.is-stuck{box-shadow:0 1px 3px rgba(15,29,46,.10),0 6px 16px -8px rgba(15,29,46,.16)}
 .hdr__main{
   display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:24px;
   height:var(--header-h);transition:height .18s ease;
 }
 .hdr.is-compact .hdr__main{height:var(--header-h-compact)}
 
-/* Real brand logo artwork — white lettering, drawn for a dark ground.
-   Do not substitute a placeholder mark. */
+/* Real brand logo artwork. The source file is white lettering on
+   transparency; the header uses a charcoal recolour of that same artwork so
+   it reads on the light ground. Do not substitute a placeholder mark. */
 .logo{display:flex;align-items:center;flex:none}
 .logo img{
   width:206px;height:auto;display:block;
@@ -122,14 +124,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .search{position:relative;max-width:560px;width:100%;justify-self:center}
 .search__field{
   display:flex;align-items:center;gap:10px;background:var(--hdr-field);
-  border:1.5px solid rgba(255,255,255,.16);border-radius:var(--radius);padding:0 14px;height:46px;
+  border:1.5px solid var(--hdr-line);border-radius:var(--radius);padding:0 14px;height:46px;
   transition:height .18s ease,border-color .15s ease,background .15s ease;
 }
 .hdr.is-compact .search__field{height:38px}
 .search__field:focus-within{background:#fff;border-color:var(--brand-accent)}
 .search__field:focus-within .search__ico{color:var(--text-muted)}
 .search__field:focus-within input{color:var(--text)}
-.search__field input{border:0;background:none;outline:none;flex:1;font-size:14.5px;min-width:0;color:#fff}
+.search__field input{border:0;background:none;outline:none;flex:1;font-size:14.5px;min-width:0;color:var(--text)}
 .search__field input::placeholder{color:var(--hdr-muted)}
 .search__ico{flex:none;color:var(--hdr-muted)}
 .sugg{
@@ -147,7 +149,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;border-radius:8px;
   font-size:11px;font-weight:600;color:var(--hdr-text);position:relative;
 }
-.tool:hover{background:rgba(255,255,255,.1)}
+.tool:hover{background:var(--bg-alt);color:var(--brand-accent)}
 .tool span{white-space:nowrap}
 .hdr.is-compact .tool span{display:none}
 .badge{
@@ -155,25 +157,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   background:var(--brand-accent);color:#fff;border-radius:99px;
   font-size:10.5px;font-weight:700;display:grid;place-items:center;
 }
-.vat{
-  display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
-  color:var(--hdr-muted);border-left:1px solid var(--hdr-line);padding-left:14px;margin-left:6px;
-}
-.vat button{
-  position:relative;width:40px;height:22px;border-radius:99px;background:rgba(255,255,255,.22);transition:background .15s;
-}
-.vat button::after{
-  content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;
-  background:#fff;box-shadow:var(--shadow-sm);transition:transform .15s;
-}
-.vat button[aria-pressed="true"]{background:var(--brand-eco)}
-.vat button[aria-pressed="true"]::after{transform:translateX(18px)}
-
 .burger{display:none;padding:8px;border-radius:8px;color:var(--hdr-text)}
-.burger:hover{background:rgba(255,255,255,.1)}
+.burger:hover{background:var(--bg-alt)}
 
 /* --- mega menu ----------------------------------------------------- */
-.nav{border-top:1px solid var(--hdr-line)}
+.nav{border-top:1px solid var(--hdr-line);background:var(--bg-alt)}
 .hdr.is-compact .nav{display:none}
 .nav__list{display:flex;gap:2px;list-style:none;margin:0;padding:0}
 .nav__item{position:static}
@@ -181,7 +169,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   display:flex;align-items:center;gap:5px;padding:12px 13px;font-size:14px;font-weight:600;
   color:var(--hdr-text);border-bottom:2.5px solid transparent;
 }
-.nav__btn:hover,.nav__item.is-open .nav__btn{color:#fff;border-bottom-color:var(--brand-accent)}
+.nav__btn:hover,.nav__item.is-open .nav__btn{color:var(--brand-accent);border-bottom-color:var(--brand-accent)}
 .nav__btn .chev{transition:transform .15s}
 .nav__item.is-open .nav__btn .chev{transform:rotate(180deg)}
 .mega{
@@ -355,21 +343,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 /* ============================================================
    LOGO WALL + ACCREDITATIONS
    ============================================================ */
-.logos{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-.logo-cell{
-  height:72px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-  display:grid;place-items:center;color:var(--text-muted);font-weight:700;font-size:13.5px;
-  letter-spacing:.02em;transition:.15s;
-}
-.logo-cell:hover{border-color:var(--brand-ink);color:var(--brand-ink)}
-
-.accred{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center}
-.accred a,.accred span{
-  display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);
-  border-radius:99px;padding:10px 18px;font-size:13.5px;font-weight:650;color:var(--brand-ink);
-}
-.accred a:hover{border-color:var(--brand-eco);color:var(--brand-eco)}
-.accred .mark{width:26px;height:26px;border-radius:50%;background:var(--brand-accent-soft);display:grid;place-items:center;font-size:12px}
+/* .logos / .accred are defined in the overrides block further down —
+   the client brands are a marquee and the accreditations a centred grid. */
 
 /* ============================================================
    BLOG + NEWSLETTER + FOOTER
@@ -417,13 +392,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .hero__art{max-width:460px}
   .tiles{grid-template-columns:repeat(3,1fr)}
   .carousel__track{grid-auto-columns:calc((100% - 2*16px)/3)}
-  .logos{grid-template-columns:repeat(4,1fr)}
   .reviews__grid{grid-template-columns:1fr;gap:28px}
   .news__grid{grid-template-columns:1fr;gap:24px}
   .ftr__grid{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:860px){
-  .nav,.vat,.tool span{display:none}
+  .nav,.tool span{display:none}
   .burger{display:block}
   .hdr__main{grid-template-columns:auto auto 1fr auto;gap:12px}
   .search{grid-column:1/-1;order:3;max-width:none;padding-bottom:12px}
@@ -440,7 +414,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   .hero__art{grid-template-columns:repeat(2,1fr)}
   .tiles{grid-template-columns:1fr}
   .carousel__track{grid-auto-columns:78%}
-  .logos{grid-template-columns:repeat(2,1fr)}
   .usp__grid{grid-template-columns:1fr}
   .ftr__grid{grid-template-columns:1fr}
   .hero__cta .btn{width:100%}
@@ -477,19 +450,57 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .post__img{overflow:hidden;background:var(--bg-alt)}
 .post__img img{width:100%;height:100%;object-fit:cover}
 
-/* logo wall — minmax(0,1fr) stops wide logos forcing the grid past the wrap */
-.logos{grid-template-columns:repeat(6,minmax(0,1fr))}
-.logo-cell{padding:12px;overflow:hidden}
-.logo-cell img{max-height:34px;max-width:100%;width:auto;object-fit:contain}
+/* --- client brands: continuous marquee ------------------------------
+   The strip is rendered twice and translated by exactly -50%, so the loop
+   is seamless. Edges are feathered so logos fade rather than clip. */
+.marquee{
+  position:relative;overflow:hidden;padding:4px 0;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent);
+  mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent);
+}
+.marquee__track{display:flex;width:max-content;animation:marquee 42s linear infinite}
+.marquee:hover .marquee__track,.marquee:focus-within .marquee__track{animation-play-state:paused}
+.marquee__strip{display:flex;gap:12px;padding-right:12px}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* accreditations — these SVGs carry no intrinsic width, so both axes must be set */
-/* The award artwork is a mix of circular emblems (PNG) and wide wordmarks
-   drawn inside a square 150x150 viewBox (SVG). A small square slot renders the
-   wordmarks as an invisible sliver, so the mark gets a generous box. */
-.accred{justify-content:flex-start}
-.accred .mark{width:auto;height:auto;background:none;border-radius:0;flex:none}
-.accred .mark img{width:60px;height:60px;object-fit:contain}
-.accred a,.accred span{padding:8px 20px 8px 10px}
+.logo-cell{
+  width:180px;flex:none;height:84px;padding:14px;overflow:hidden;
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+  display:grid;place-items:center;transition:border-color .15s ease,box-shadow .15s ease;
+}
+.logo-cell:hover{border-color:transparent;box-shadow:var(--shadow-md)}
+.logo-cell img{max-height:42px;max-width:100%;width:auto;object-fit:contain}
+
+/* --- accreditations: centred marks, no chrome -----------------------
+   The award artwork mixes circular emblems (PNG) with wide wordmarks drawn
+   inside a square 150x150 viewBox (SVG), so every mark gets the same
+   generous square and is contained rather than cropped. */
+.sec-head--center{justify-content:center;text-align:center}
+.accred{
+  list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:32px 20px;
+  justify-items:center;align-items:start;
+}
+.accred__item{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  max-width:190px;text-align:center;
+}
+/* The wordmark SVGs fill their square viewBox edge-to-edge with no internal
+   padding, while the emblem PNGs sit inset. Padding the box evens them out
+   so nothing reads as cropped. */
+.accred__mark{
+  display:grid;place-items:center;width:130px;height:104px;padding:0 10px;
+}
+.accred__mark img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.accred__label{
+  font-size:13px;font-weight:650;line-height:1.4;color:var(--brand-ink-soft);
+}
+
+@media (max-width:560px){
+  .accred{grid-template-columns:repeat(2,1fr);gap:26px 12px}
+  .accred__mark{width:110px;height:84px}
+  .logo-cell{width:150px;height:74px}
+}
 
 /* three published USPs, not Design A's four */
 .usp__grid{grid-template-columns:repeat(3,1fr)}

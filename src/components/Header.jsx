@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import asset from '../asset.js'
-import { useVat } from '../VatContext.jsx'
 
 const fmt = new Intl.NumberFormat('en-GB')
 
@@ -12,7 +11,6 @@ export default function Header({ nav, suggestions }) {
   const [query, setQuery] = useState('')
   const [suggOpen, setSuggOpen] = useState(false)
   const searchRef = useRef(null)
-  const { incVat, setIncVat } = useVat()
 
   useEffect(() => {
     let frame = null
@@ -51,7 +49,7 @@ export default function Header({ nav, suggestions }) {
             </button>
 
             <a className="logo" href="#top">
-              <img src={asset('img/logo/bounce-logo.png')} width="240" height="71"
+              <img src={asset('img/logo/bounce-logo-dark.png')} width="240" height="71"
                    alt="Bounce Creative Designs | Promotional Products" />
             </a>
 
@@ -92,11 +90,6 @@ export default function Header({ nav, suggestions }) {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 7h12l-1 13H7L6 7Z" strokeLinejoin="round" /><path d="M9 7a3 3 0 0 1 6 0" strokeLinecap="round" /></svg>
                 <span>Basket</span>
               </a>
-              <div className="vat">
-                <span>{incVat ? 'Inc VAT' : 'Ex VAT'}</span>
-                <button type="button" aria-pressed={incVat} aria-label="Toggle VAT display"
-                        onClick={() => setIncVat(!incVat)} />
-              </div>
             </div>
           </div>
         </div>

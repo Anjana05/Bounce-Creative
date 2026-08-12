@@ -4,3 +4,9 @@ dist
 *.local
 .vite
 preview.html
+
+# never commit keys
+id_ed*
+*.pem
+*_rsa
+*_ed25519

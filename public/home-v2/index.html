@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Second homepage concept for Bounce Creative Designs — built from live site imagery and content.">
+<meta name="robots" content="noindex, nofollow">
+<title>Bounce Creative Designs — Promotional Products & Branded Merchandise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#18171C; --ink-2:#111015; --ink-soft:#57545C;
+    --pink:#E5306E; --pink-deep:#C31F57; --pink-lt:#FF77A4; --pink-tint:#FCEAF1; --pink-tint-2:#FAF3F6;
+    --paper:#FFFFFF; --muted:#726F77; --muted-dark:rgba(255,255,255,0.60);
+    --line:rgba(24,23,28,0.10); --line-dark:rgba(255,255,255,0.13);
+    --fd:'Space Grotesk',sans-serif; --fb:'Inter',sans-serif;
+    --dots-pink:radial-gradient(rgba(229,48,110,0.16) 1.4px, transparent 1.5px);
+    --dots-white:radial-gradient(rgba(255,255,255,0.14) 1.4px, transparent 1.5px);
+    --wheel-r:340px;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ font-family:var(--fb); background:var(--paper); color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  a{ color:inherit; text-decoration:none; }
+  img,svg{ display:block; max-width:100%; }
+  .wrap{ max-width:1240px; margin:0 auto; padding:0 34px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+  ::selection{ background:var(--pink); color:var(--paper); }
+  a:focus-visible, button:focus-visible, input:focus-visible{ outline:3px solid var(--pink); outline-offset:2px; border-radius:5px; }
+
+  .progress{ position:fixed; top:0; left:0; height:3px; background:var(--pink); width:0%; z-index:100; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .stagger>*{ opacity:0; transform:translateY(20px); transition:opacity .55s ease, transform .55s ease; }
+  .stagger.in>*{ opacity:1; transform:translateY(0); }
+  .stagger.in>*:nth-child(1){transition-delay:.03s;} .stagger.in>*:nth-child(2){transition-delay:.09s;}
+  .stagger.in>*:nth-child(3){transition-delay:.15s;} .stagger.in>*:nth-child(4){transition-delay:.21s;}
+  .stagger.in>*:nth-child(5){transition-delay:.27s;} .stagger.in>*:nth-child(6){transition-delay:.33s;}
+  .stagger.in>*:nth-child(7){transition-delay:.39s;} .stagger.in>*:nth-child(8){transition-delay:.45s;}
+
+  .dotmark{ display:inline-grid; grid-template-columns:repeat(2,7px); grid-template-rows:repeat(3,7px); gap:4px; flex-shrink:0; }
+  .dotmark span{ width:7px; height:7px; border-radius:50%; background:var(--pink); }
+  .adot{ width:7px; height:7px; border-radius:50%; background:var(--pink); display:inline-block; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:9px; font-family:var(--fb); font-weight:600; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--pink); margin-bottom:16px; }
+
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-family:var(--fb); font-weight:600; font-size:14.5px; padding:13px 26px; border-radius:999px; border:none; cursor:pointer; transition:all .18s ease; white-space:nowrap; }
+  .btn-pink{ background:var(--pink); color:var(--paper); box-shadow:0 5px 0 var(--pink-deep); }
+  .btn-pink:hover{ transform:translateY(-2px); box-shadow:0 7px 0 var(--pink-deep); }
+  .btn-pink:active{ transform:translateY(2px); box-shadow:0 2px 0 var(--pink-deep); }
+  .btn-ol-light{ background:transparent; color:var(--paper); border:1.5px solid rgba(255,255,255,0.38); }
+  .btn-ol-light:hover{ background:rgba(255,255,255,0.1); border-color:var(--paper); }
+  .btn-ol-dark{ background:transparent; color:var(--ink); border:1.5px solid var(--ink); }
+  .btn-ol-dark:hover{ background:var(--ink); color:var(--paper); }
+  .btn-sm{ padding:10px 20px; font-size:13.5px; }
+
+  /* header */
+  .offer-bar{ background:var(--ink); color:var(--paper); text-align:center; font-size:12.5px; font-weight:500; letter-spacing:0.03em; padding:11px 20px; }
+  .offer-bar b{ color:var(--pink); font-weight:700; }
+  header{ background:var(--paper); border-bottom:1px solid var(--line); position:sticky; top:0; z-index:50; }
+  .header-top{ display:flex; align-items:center; justify-content:space-between; gap:28px; padding:20px 34px; max-width:1240px; margin:0 auto; }
+  .logo{ display:flex; align-items:center; gap:13px; flex-shrink:0; }
+  .logo-text{ font-family:var(--fd); line-height:1; }
+  .logo-text .l1{ display:block; font-weight:700; font-size:20px; letter-spacing:0.02em; color:var(--ink); }
+  .logo-text .l2{ display:block; font-size:12.5px; font-weight:500; margin-top:3px; }
+  .logo-text .l2 .c1{ color:var(--ink-soft); } .logo-text .l2 .c2{ color:var(--pink); font-weight:600; }
+  .search-bar{ flex:1; max-width:430px; position:relative; display:none; }
+  @media (min-width:820px){ .search-bar{ display:block; } }
+  .search-bar input{ width:100%; border:1.5px solid var(--line); border-radius:999px; padding:12px 44px 12px 20px; font-family:var(--fb); font-size:13.5px; background:var(--pink-tint-2); }
+  .search-bar svg{ position:absolute; right:16px; top:50%; transform:translateY(-50%); width:16px; height:16px; }
+  .head-icons{ display:flex; align-items:center; gap:24px; flex-shrink:0; }
+  .head-icon{ display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10.5px; font-weight:600; color:var(--ink-soft); }
+  .head-icon svg{ width:19px; height:19px; }
+  @media (max-width:820px){ .head-icon span{ display:none; } }
+  .cat-nav{ border-top:1px solid var(--line); }
+  .cat-nav-inner{ max-width:1240px; margin:0 auto; padding:0 34px; display:flex; gap:28px; overflow-x:auto; font-size:12.5px; font-weight:500; }
+  .cat-nav-inner a{ padding:13px 0; white-space:nowrap; color:var(--ink-soft); border-bottom:2px solid transparent; }
+  .cat-nav-inner a:hover{ color:var(--pink); border-color:var(--pink); }
+
+  /* ============ LIVE HERO ============ */
+  .hero{ position:relative; background:var(--ink); color:var(--paper); overflow:hidden; min-height:min(92vh,820px); display:flex; flex-direction:column; }
+  .hero-bg{ position:absolute; inset:0; overflow:hidden; z-index:0; }
+  .hero-dots{ position:absolute; inset:-40px; background-image:var(--dots-white); background-size:26px 26px; opacity:0.45; animation:pan 22s linear infinite; }
+  @keyframes pan{ to{ background-position:26px 26px; } }
+  .blob{ position:absolute; border-radius:50%; filter:blur(80px); opacity:0.55; }
+  .blob.b1{ width:520px; height:520px; background:var(--pink); top:-120px; right:-80px; animation:drift1 16s ease-in-out infinite; }
+  .blob.b2{ width:420px; height:420px; background:var(--pink-deep); bottom:-160px; left:8%; opacity:0.4; animation:drift2 19s ease-in-out infinite; }
+  .blob.b3{ width:260px; height:260px; background:var(--pink-lt); top:40%; left:38%; opacity:0.25; animation:drift1 13s ease-in-out infinite reverse; }
+  @keyframes drift1{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(-40px,30px) scale(1.1); } }
+  @keyframes drift2{ 0%,100%{ transform:translate(0,0) scale(1); } 50%{ transform:translate(50px,-30px) scale(1.08); } }
+  .particle{ position:absolute; border-radius:50%; background:var(--pink); box-shadow:0 0 12px 2px rgba(229,48,110,0.5); opacity:0.55; z-index:1; }
+  .particle.pa1{ width:8px; height:8px; top:18%; left:12%; animation:floatp 8s ease-in-out infinite; }
+  .particle.pa2{ width:5px; height:5px; top:30%; left:84%; animation:floatp 6.5s ease-in-out infinite 0.6s; }
+  .particle.pa3{ width:6px; height:6px; top:70%; left:20%; animation:floatp 9s ease-in-out infinite 1.2s; }
+  .particle.pa4{ width:4px; height:4px; top:78%; left:78%; animation:floatp 7.5s ease-in-out infinite 0.3s; }
+  .particle.pa5{ width:7px; height:7px; top:12%; left:60%; animation:floatp 8.5s ease-in-out infinite 1.5s; }
+  @keyframes floatp{ 0%,100%{ transform:translate(0,0); opacity:0.55; } 50%{ transform:translate(14px,-24px); opacity:0.9; } }
+  .hero-vignette{ position:absolute; inset:0; z-index:2; pointer-events:none; background:radial-gradient(120% 90% at 70% 40%, transparent 40%, rgba(17,16,21,0.55) 100%), linear-gradient(90deg, var(--ink) 4%, transparent 42%); }
+
+  .hero-inner{ position:relative; z-index:3; flex:1; display:grid; grid-template-columns:0.95fr 1.05fr; align-items:center; gap:20px; padding-top:20px; }
+  @media (max-width:960px){ .hero-inner{ grid-template-columns:1fr; } }
+
+  .hero-copy{ padding:24px 0; }
+  .hero-copy .eyebrow{ animation:fadeUp .7s ease both; }
+  .hero h1{ font-family:var(--fd); font-weight:700; font-size:clamp(36px,5vw,60px); line-height:1.04; letter-spacing:-0.02em; margin-bottom:22px; animation:fadeUp .7s .05s ease both; }
+  .hero h1 .hl{ background:linear-gradient(90deg,var(--pink),var(--pink-lt),var(--pink)); background-size:200% auto; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; animation:shimmer 5s linear infinite; }
+  @keyframes shimmer{ to{ background-position:200% center; } }
+  .hero p.lede{ font-size:16.5px; line-height:1.62; color:var(--muted-dark); max-width:440px; margin-bottom:32px; animation:fadeUp .7s .1s ease both; }
+  .hero-actions{ display:flex; gap:15px; flex-wrap:wrap; margin-bottom:38px; animation:fadeUp .7s .15s ease both; }
+  .trusted-line{ font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:rgba(255,255,255,0.38); margin-bottom:15px; animation:fadeUp .7s .2s ease both; }
+  .trusted-logos{ display:flex; gap:30px; flex-wrap:wrap; font-family:var(--fd); font-weight:600; font-size:16px; color:rgba(255,255,255,0.5); animation:fadeUp .7s .25s ease both; }
+  @keyframes fadeUp{ from{ opacity:0; transform:translateY(20px); } to{ opacity:1; transform:translateY(0); } }
+
+  /* 3D wheel */
+  .stage{ position:relative; height:520px; perspective:1500px; touch-action:pan-y; }
+  .stage::before{ content:''; position:absolute; top:50%; left:50%; width:320px; height:320px; transform:translate(-50%,-50%); border-radius:50%; background:radial-gradient(circle, rgba(229,48,110,0.45), rgba(229,48,110,0) 68%); filter:blur(24px); z-index:0; animation:halo 4.5s ease-in-out infinite; pointer-events:none; }
+  @keyframes halo{ 0%,100%{ transform:translate(-50%,-50%) scale(1); opacity:.75; } 50%{ transform:translate(-50%,-50%) scale(1.18); opacity:1; } }
+  @media (max-width:960px){ .stage{ height:420px; } :root{ --wheel-r:230px; } .stage::before{ width:230px; height:230px; } }
+  .ring{ position:absolute; top:50%; left:50%; width:0; height:0; transform-style:preserve-3d; will-change:transform; cursor:grab; filter:blur(0.3px); z-index:1; }
+  .ring.grabbing{ cursor:grabbing; }
+  .card{ position:absolute; top:50%; left:50%; width:172px; height:214px; margin:-107px 0 0 -86px; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,0.16); box-shadow:0 26px 55px -18px rgba(0,0,0,0.75), inset 0 1px 0 rgba(255,255,255,0.25); backface-visibility:hidden; transform:rotateY(var(--a)) translateZ(var(--wheel-r)); }
+  @media (max-width:960px){ .card{ width:132px; height:166px; margin:-83px 0 0 -66px; } }
+  .card::after{ content:''; position:absolute; inset:0; z-index:2; background:linear-gradient(155deg, rgba(255,255,255,0.30), rgba(255,255,255,0) 42%), linear-gradient(0deg, rgba(0,0,0,0.18), transparent 40%); }
+  .card .tex{ position:absolute; inset:0; z-index:1; }
+  .card.c-ink{ background:linear-gradient(150deg,#3a373f,#17161c 92%); }
+  .card.c-ink .tex{ background-image:var(--dots-white); background-size:16px 16px; opacity:0.4; }
+  .card.c-pink{ background:linear-gradient(150deg,#ff5088 0%,var(--pink) 46%,var(--pink-deep) 100%); }
+  .card.c-pink .tex{ background-image:var(--dots-white); background-size:16px 16px; opacity:0.5; }
+  .card.c-tint{ background:linear-gradient(150deg,#ffffff,#ffd6e4); }
+  .card.c-tint .tex{ background-image:var(--dots-pink); background-size:16px 16px; opacity:0.8; }
+  .card .chip{ position:absolute; left:12px; bottom:12px; z-index:3; font-family:var(--fd); font-weight:600; font-size:11px; letter-spacing:0.02em; padding:5px 10px; border-radius:999px; background:rgba(24,23,28,0.5); color:#fff; backdrop-filter:blur(4px); }
+  .card.c-tint .chip{ background:rgba(24,23,28,0.78); }
+
+  .drag-hint{ position:absolute; z-index:3; left:50%; bottom:6px; transform:translateX(-50%); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.4); display:flex; align-items:center; gap:8px; }
+  .drag-hint svg{ width:15px; height:15px; }
+
+  .scroll-cue{ position:relative; z-index:3; display:flex; flex-direction:column; align-items:center; gap:7px; padding:6px 0 22px; }
+  .scroll-cue .txt{ font-size:11px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,0.5); }
+  .scroll-cue .mouse{ width:24px; height:38px; border:2px solid rgba(255,255,255,0.4); border-radius:14px; position:relative; }
+  .scroll-cue .mouse::before{ content:''; position:absolute; top:6px; left:50%; transform:translateX(-50%); width:4px; height:7px; border-radius:2px; background:var(--pink); animation:scrolldot 1.6s ease-in-out infinite; }
+  @keyframes scrolldot{ 0%{ opacity:0; transform:translate(-50%,0); } 40%{ opacity:1; } 80%{ opacity:0; transform:translate(-50%,12px); } 100%{ opacity:0; } }
+
+  /* ===== ATTENTION ANIMATIONS ===== */
+
+  /* running-border wrapper: a light traces the edge continuously */
+  .traced{ position:relative; border-radius:inherit; }
+  .traced::before{
+    content:''; position:absolute; inset:0; border-radius:inherit; padding:2px;
+    background:conic-gradient(from var(--ang,0deg), transparent 0deg, transparent 250deg, var(--pink) 300deg, var(--pink-lt) 330deg, transparent 360deg);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+    animation:spin-ang 3.2s linear infinite; pointer-events:none; z-index:5;
+  }
+  @property --ang{ syntax:'<angle>'; inherits:false; initial-value:0deg; }
+  @keyframes spin-ang{ to{ --ang:360deg; } }
+  /* fallback if @property unsupported: rotate a masked ring element */
+  .traced.on-dark::before{ background:conic-gradient(from var(--ang,0deg), transparent 0deg, transparent 250deg, var(--pink) 300deg, #fff 330deg, transparent 360deg); }
+
+  /* glowing pulse ring (buttons / cues) */
+  .pulse{ position:relative; }
+  .pulse::after{
+    content:''; position:absolute; inset:0; border-radius:inherit; border:2px solid var(--pink);
+    animation:pulse-ring 2s ease-out infinite; pointer-events:none;
+  }
+  @keyframes pulse-ring{ 0%{ opacity:.7; transform:scale(1); } 100%{ opacity:0; transform:scale(1.35); } }
+
+  /* shine sweep across a surface on view + hover */
+  .shine{ position:relative; overflow:hidden; }
+  .shine::after{
+    content:''; position:absolute; top:0; left:-120%; width:60%; height:100%; z-index:4; pointer-events:none;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,0.55), transparent);
+    transform:skewX(-18deg); animation:sweep 4.5s ease-in-out infinite;
+  }
+  @keyframes sweep{ 0%,60%{ left:-120%; } 85%,100%{ left:130%; } }
+
+  /* animated pill badge with rotating glow */
+  .live-badge{ position:absolute; top:13px; left:13px; z-index:6; display:inline-flex; align-items:center; gap:6px;
+    background:var(--ink); color:#fff; font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+    padding:6px 11px 6px 9px; border-radius:999px; overflow:hidden; }
+  .live-badge .rec{ width:6px; height:6px; border-radius:50%; background:var(--pink); animation:blink 1.2s ease-in-out infinite; }
+  @keyframes blink{ 0%,100%{ opacity:1; box-shadow:0 0 0 0 rgba(229,48,110,0.7);} 50%{ opacity:.4; box-shadow:0 0 0 5px rgba(229,48,110,0);} }
+
+  /* front wheel tile highlight */
+  .card.lit{ box-shadow:0 24px 55px -16px rgba(229,48,110,0.55), 0 0 0 2px var(--pink); transition:box-shadow .3s ease; }
+
+  @media (prefers-reduced-motion:reduce){
+    .hero-dots,.blob,.particle,.stage::before,.hero h1 .hl,.scroll-cue .mouse::before,
+    .traced::before,.pulse::after,.shine::after,.live-badge .rec{ animation:none !important; }
+    .ring{ filter:none; }
+    *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  }
+
+  /* trust band */
+  .trust-band{ background:var(--ink-2); padding:24px 0; }
+  .trust-band .wrap{ display:flex; align-items:center; gap:40px; flex-wrap:wrap; justify-content:space-between; }
+  .tb-label{ font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.36); white-space:nowrap; }
+  .tb-logos{ display:flex; gap:44px; flex-wrap:wrap; font-family:var(--fd); font-weight:600; font-size:17px; color:rgba(255,255,255,0.7); }
+
+  /* apart */
+  .apart{ display:grid; grid-template-columns:0.85fr 1fr 1fr 1fr; border:1px solid var(--line); border-radius:20px; overflow:hidden; }
+  @media (max-width:820px){ .apart{ grid-template-columns:1fr; } }
+  .apart-head{ background:var(--ink); color:var(--paper); display:flex; align-items:center; padding:30px; font-family:var(--fd); font-weight:600; font-size:17px; position:relative; }
+  .apart-head::before{ content:''; position:absolute; inset:0; background-image:var(--dots-white); background-size:20px 20px; opacity:0.4; }
+  .apart-item{ background:var(--paper); padding:30px; display:flex; align-items:flex-start; gap:14px; border-left:1px solid var(--line); }
+  @media (max-width:820px){ .apart-item{ border-left:none; border-top:1px solid var(--line); } }
+  .apart-item .adot{ margin-top:6px; }
+  .apart-item b{ display:block; font-family:var(--fd); font-weight:600; font-size:15px; margin-bottom:4px; }
+  .apart-item span{ font-size:12.5px; color:var(--muted); line-height:1.45; }
+
+  /* section */
+  .section{ padding:92px 0; }
+  .section-tight{ padding:66px 0; }
+  .bg-tint{ background:var(--pink-tint-2); }
+  .sec-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:26px; margin-bottom:44px; flex-wrap:wrap; }
+  .sec-head h2{ font-family:var(--fd); font-weight:700; font-size:clamp(27px,3.3vw,42px); letter-spacing:-0.018em; line-height:1.08; max-width:600px; }
+  .sec-head p{ max-width:430px; color:var(--muted); font-size:14.5px; line-height:1.55; margin-top:10px; }
+  .sec-cta{ font-size:13.5px; font-weight:600; display:flex; align-items:center; gap:6px; padding-bottom:5px; border-bottom:2px solid var(--pink); flex-shrink:0; color:var(--ink); }
+  .center-head{ justify-content:center; text-align:center; flex-direction:column; align-items:center; }
+
+  .filter-row{ display:flex; gap:9px; flex-wrap:wrap; margin-bottom:34px; }
+  .fpill{ font-size:12.5px; font-weight:500; padding:8px 16px; border-radius:999px; border:1.5px solid var(--line); color:var(--ink-soft); background:var(--paper); }
+  .fpill.active{ background:var(--pink); color:var(--paper); border-color:var(--pink); }
+
+  .cat-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+  @media (max-width:900px){ .cat-grid{ grid-template-columns:repeat(2,1fr); } }
+  .ctile{ border-radius:18px; aspect-ratio:1/1; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; padding:20px; transition:transform .25s ease; }
+  .ctile:hover{ transform:translateY(-6px); }
+  .ctile .cn{ position:relative; z-index:1; font-family:var(--fd); font-weight:600; font-size:16px; }
+  .ctile .cc{ position:relative; z-index:1; font-size:11px; font-weight:500; margin-top:3px; opacity:0.72; }
+  .on-ink{ background:var(--ink); color:var(--paper); }
+  .on-ink.tex::before{ content:''; position:absolute; inset:0; background-image:var(--dots-white); background-size:20px 20px; opacity:0.4; }
+  .on-pink{ background:var(--pink); color:var(--paper); }
+  .on-pink.tex::before{ content:''; position:absolute; inset:0; background-image:var(--dots-white); background-size:20px 20px; opacity:0.6; }
+  .on-tint{ background:var(--pink-tint); color:var(--ink); }
+  .on-tint.tex::before{ content:''; position:absolute; inset:0; background-image:var(--dots-pink); background-size:20px 20px; opacity:0.9; }
+
+  .rail{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+  @media (max-width:980px){ .rail{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .rail{ grid-template-columns:1fr; } }
+  .pcard{ background:var(--paper); border:1px solid var(--line); border-radius:18px; overflow:hidden; transition:all .25s ease; display:flex; flex-direction:column; }
+  .pcard:hover{ transform:translateY(-6px); box-shadow:0 24px 42px -22px rgba(24,23,28,0.3); border-color:transparent; }
+  .pmedia{ aspect-ratio:1/0.88; position:relative; }
+  .pmedia.tint{ background:var(--pink-tint); } .pmedia.tint::before{ content:''; position:absolute; inset:0; background-image:var(--dots-pink); background-size:18px 18px; }
+  .pmedia.pink{ background:var(--pink); } .pmedia.pink::before{ content:''; position:absolute; inset:0; background-image:var(--dots-white); background-size:18px 18px; opacity:0.55; }
+  .pmedia.ink{ background:var(--ink); } .pmedia.ink::before{ content:''; position:absolute; inset:0; background-image:var(--dots-white); background-size:18px 18px; opacity:0.35; }
+  .ribbon{ position:absolute; top:13px; left:13px; z-index:1; background:var(--paper); color:var(--ink); font-size:10.5px; font-weight:600; padding:5px 11px; border-radius:999px; }
+  .ribbon.solid{ background:var(--ink); color:var(--paper); }
+  .fav{ position:absolute; top:13px; right:13px; z-index:1; width:30px; height:30px; border-radius:50%; background:rgba(255,255,255,0.9); display:flex; align-items:center; justify-content:center; }
+  .fav svg{ width:14px; height:14px; }
+  .pbody{ padding:16px 16px 18px; display:flex; flex-direction:column; gap:5px; flex:1; }
+  .pcat{ font-size:10.5px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); }
+  .pname{ font-family:var(--fd); font-weight:600; font-size:14.5px; line-height:1.3; }
+  .pstars{ color:var(--pink); font-size:11px; letter-spacing:1px; margin-top:1px; }
+  .pfoot{ display:flex; align-items:center; justify-content:space-between; margin-top:9px; }
+  .pprice{ font-family:var(--fd); font-weight:700; font-size:15.5px; }
+  .pprice span{ font-family:var(--fb); font-weight:500; font-size:10.5px; color:var(--muted); }
+  .addb{ width:32px; height:32px; border-radius:50%; background:var(--ink); color:var(--paper); display:flex; align-items:center; justify-content:center; transition:background .2s ease; flex-shrink:0; }
+  .addb:hover{ background:var(--pink); }
+
+  /* calculator */
+  .calc{ background:var(--ink); color:var(--paper); border-radius:26px; padding:46px; display:grid; grid-template-columns:1fr 1fr; gap:52px; align-items:center; position:relative; overflow:hidden; }
+  .calc::before{ content:''; position:absolute; inset:0; background-image:var(--dots-white); background-size:24px 24px; opacity:0.35; pointer-events:none; }
+  .calc>*{ position:relative; z-index:1; }
+  @media (max-width:860px){ .calc{ grid-template-columns:1fr; padding:32px 24px; gap:32px; } }
+  .calc h2{ font-family:var(--fd); font-weight:700; font-size:clamp(24px,3vw,34px); line-height:1.12; margin-bottom:14px; letter-spacing:-0.01em; }
+  .calc h2 .hl{ color:var(--pink); }
+  .calc p.desc{ font-size:14.5px; color:var(--muted-dark); line-height:1.6; max-width:400px; margin-bottom:26px; }
+  .qty-presets{ display:flex; gap:9px; margin-bottom:20px; flex-wrap:wrap; }
+  .qpreset{ font-family:var(--fb); font-size:12.5px; font-weight:500; padding:8px 15px; border-radius:999px; border:1.5px solid var(--line-dark); background:transparent; color:var(--paper); cursor:pointer; transition:all .18s ease; }
+  .qpreset.active{ background:var(--pink); border-color:var(--pink); }
+  .qty-slider-row{ display:flex; align-items:center; gap:18px; }
+  input[type=range]{ flex:1; -webkit-appearance:none; appearance:none; height:6px; border-radius:999px; background:rgba(255,255,255,0.16); outline:none; }
+  input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--pink); border:4px solid var(--ink); box-shadow:0 0 0 2px var(--pink); cursor:pointer; }
+  input[type=range]::-moz-range-thumb{ width:22px; height:22px; border-radius:50%; background:var(--pink); border:4px solid var(--ink); box-shadow:0 0 0 2px var(--pink); cursor:pointer; }
+  .qty-display{ font-family:var(--fd); font-weight:700; font-size:20px; min-width:112px; text-align:right; }
+  .qty-display span{ font-family:var(--fb); font-weight:400; font-size:11px; color:var(--muted-dark); display:block; text-align:right; margin-top:2px; }
+  .calc-results{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .cstat{ background:rgba(255,255,255,0.05); border:1px solid var(--line-dark); border-radius:16px; padding:20px 18px; }
+  .cstat.wide{ grid-column:span 2; background:var(--pink); border:none; }
+  .cstat b{ display:block; font-family:var(--fd); font-weight:700; font-size:30px; line-height:1; margin-bottom:8px; }
+  .cstat.wide b{ font-size:34px; }
+  .cstat span{ font-size:11.5px; color:var(--muted-dark); line-height:1.4; display:block; }
+  .cstat.wide span{ color:rgba(24,23,28,0.72); }
+  .calc-note{ font-size:11px; color:rgba(255,255,255,0.34); margin-top:16px; line-height:1.5; }
+
+  /* why */
+  .why{ background:var(--ink); color:var(--paper); padding:88px 0; }
+  .why-tabs{ display:flex; flex-wrap:wrap; gap:20px 28px; border-bottom:1px solid var(--line-dark); padding-bottom:18px; margin-bottom:42px; font-size:11px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; }
+  .why-tabs span{ color:rgba(255,255,255,0.38); }
+  .why-tabs span.active{ color:var(--pink); border-bottom:2px solid var(--pink); padding-bottom:18px; margin-bottom:-19px; }
+  .why-grid{ display:grid; grid-template-columns:1fr 1fr; gap:52px; }
+  @media (max-width:860px){ .why-grid{ grid-template-columns:1fr; gap:26px; } }
+  .why h2{ font-family:var(--fd); font-weight:700; font-size:clamp(26px,3.2vw,38px); margin-bottom:16px; letter-spacing:-0.01em; }
+  .why p{ color:var(--muted-dark); font-size:14.5px; line-height:1.7; margin-bottom:14px; }
+  .why b{ color:var(--paper); }
+
+  .cert-row{ display:flex; gap:12px; flex-wrap:wrap; justify-content:center; }
+  .cert{ display:flex; align-items:center; gap:10px; background:var(--pink-tint); border-radius:999px; padding:11px 20px; }
+  .cert b{ font-family:var(--fd); font-weight:600; font-size:13px; }
+
+  .brand-grid{ display:grid; grid-template-columns:repeat(6,1fr); border:1px solid var(--line); border-radius:18px; overflow:hidden; }
+  @media (max-width:820px){ .brand-grid{ grid-template-columns:repeat(3,1fr); } }
+  .bcell{ aspect-ratio:2/1; display:flex; align-items:center; justify-content:center; font-family:var(--fd); font-weight:600; font-size:14px; color:var(--ink-soft); padding:10px; text-align:center; border-right:1px solid var(--line); border-bottom:1px solid var(--line); transition:all .2s ease; }
+  .bcell:hover{ color:var(--pink); background:var(--pink-tint-2); }
+
+  .awards-row{ display:flex; gap:22px; flex-wrap:wrap; justify-content:center; }
+  .rosette{ width:112px; text-align:center; }
+  .rbadge{ width:78px; height:78px; margin:0 auto; border-radius:50%; background:conic-gradient(from 180deg,var(--pink),var(--pink-deep),var(--pink)); display:flex; align-items:center; justify-content:center; position:relative; }
+  .rbadge::before{ content:''; position:absolute; inset:5px; border-radius:50%; background:var(--paper); }
+  .rbadge b{ position:relative; z-index:1; font-family:var(--fd); font-weight:700; font-size:12px; color:var(--ink); line-height:1.1; }
+  .rtails{ width:42px; height:16px; margin:-5px auto 8px; background:var(--ink); clip-path:polygon(0 0,100% 0,80% 100%,50% 68%,20% 100%); }
+  .rosette p{ font-size:11px; font-weight:500; color:var(--muted); line-height:1.35; }
+
+  .quotes{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  @media (max-width:860px){ .quotes{ grid-template-columns:1fr; } }
+  .qcard{ background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:28px 26px; display:flex; flex-direction:column; gap:16px; }
+  .qstars{ color:var(--pink); font-size:13px; letter-spacing:2px; }
+  .qcard p{ font-family:var(--fd); font-weight:500; font-size:15.5px; line-height:1.5; }
+  .qwho{ font-size:12px; color:var(--muted); font-weight:500; }
+
+  .help{ background:var(--pink-tint); border-radius:24px; padding:40px 46px; display:grid; grid-template-columns:auto 1fr auto; gap:32px; align-items:center; }
+  @media (max-width:760px){ .help{ grid-template-columns:1fr; text-align:center; padding:32px 24px; } }
+  .help-av{ width:78px; height:78px; border-radius:50%; background:linear-gradient(155deg,var(--pink),var(--pink-deep)); position:relative; flex-shrink:0; }
+  .help-av::after{ content:''; position:absolute; bottom:15px; left:50%; transform:translateX(-50%); width:26px; height:14px; border:2px solid rgba(255,255,255,0.75); border-bottom:none; border-radius:14px 14px 0 0; }
+  .help h3{ font-family:var(--fd); font-weight:700; font-size:clamp(22px,2.6vw,30px); }
+  .help .circ{ position:relative; color:var(--pink); }
+  .help .circ svg{ position:absolute; left:-8px; top:-9px; width:calc(100% + 16px); height:calc(100% + 18px); }
+  .help-sub{ font-size:14px; color:var(--ink-soft); margin-top:6px; }
+
+  .news{ background:var(--pink); border-radius:24px; padding:50px 46px; display:grid; grid-template-columns:1fr auto; gap:30px; align-items:center; }
+  @media (max-width:760px){ .news{ grid-template-columns:1fr; text-align:center; padding:36px 26px; } }
+  .news h3{ font-family:var(--fd); font-weight:700; font-size:clamp(22px,2.8vw,30px); color:var(--paper); margin-bottom:6px; }
+  .news p{ font-size:14px; color:rgba(255,255,255,0.82); }
+  .news-form{ display:flex; gap:10px; flex-wrap:wrap; }
+  @media (max-width:760px){ .news-form{ justify-content:center; } }
+  .news-form input{ border:none; border-radius:999px; padding:13px 20px; font-family:var(--fb); font-size:14px; min-width:220px; }
+  .btn-onpink{ background:var(--ink); color:var(--paper); }
+  .btn-onpink:hover{ background:var(--ink-2); }
+
+  footer{ background:var(--ink); color:var(--muted-dark); padding-top:70px; }
+  .foot-grid{ display:grid; grid-template-columns:1.35fr 1fr 1fr 1fr 1fr; gap:36px; padding-bottom:44px; border-bottom:1px solid var(--line-dark); margin-bottom:24px; }
+  @media (max-width:900px){ .foot-grid{ grid-template-columns:1fr 1fr; } }
+  .foot-logo-row{ display:flex; align-items:center; gap:11px; margin-bottom:15px; }
+  .foot-logo-row .logo-text .l1{ color:var(--paper); }
+  .foot-brand p{ font-size:13px; line-height:1.6; max-width:230px; margin-bottom:18px; }
+  .foot-social{ display:flex; gap:9px; }
+  .foot-social a{ width:34px; height:34px; border-radius:50%; border:1px solid var(--line-dark); display:flex; align-items:center; justify-content:center; transition:all .2s ease; }
+  .foot-social a:hover{ background:var(--pink); border-color:var(--pink); }
+  .foot-social svg{ width:15px; height:15px; }
+  .foot-col h4{ font-size:10.5px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.4); margin-bottom:16px; }
+  .foot-col a{ display:block; font-size:13px; color:var(--muted-dark); padding:5px 0; transition:color .2s ease; }
+  .foot-col a:hover{ color:var(--pink); }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; font-size:12px; flex-wrap:wrap; gap:14px; padding:24px 0; }
+  .foot-legal{ display:flex; gap:18px; flex-wrap:wrap; }
+
+  /* ============ IMAGERY ============ */
+  .logo-img{ height:40px; width:auto; }
+  .foot-logo-img{ height:38px; width:auto; }
+
+  .trusted-logos{ align-items:center; gap:32px; }
+  .trusted-logos img{ height:24px; width:auto; filter:brightness(0) invert(1); opacity:0.58; transition:opacity .2s ease; }
+  .trusted-logos img:hover{ opacity:1; }
+
+  .tb-logos{ gap:12px; align-items:center; }
+  .tb-logo{ background:var(--paper); border-radius:11px; height:46px; padding:7px 16px; display:flex; align-items:center; justify-content:center; transition:transform .2s ease; }
+  .tb-logo:hover{ transform:translateY(-3px); }
+  .tb-logo img{ max-height:30px; max-width:104px; width:auto; object-fit:contain; }
+
+  /* hero wheel tiles */
+  .card.has-img .tex{ display:none; }
+  .card .cimg{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+  .card .cimg-scrim{ position:absolute; inset:0; z-index:2; background:linear-gradient(180deg, rgba(24,23,28,0) 42%, rgba(24,23,28,0.78) 100%); }
+
+  /* category tiles */
+  .ctile.has-img{ color:var(--paper); }
+  .ctile.has-img .cc{ opacity:0.82; }
+  .ctile .ctile-img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; transition:transform .55s cubic-bezier(.2,.7,.2,1); }
+  .ctile:hover .ctile-img{ transform:scale(1.07); }
+  .ctile .ctile-scrim{ position:absolute; inset:0; z-index:0; background:linear-gradient(180deg, rgba(24,23,28,0) 32%, rgba(24,23,28,0.55) 66%, rgba(24,23,28,0.88) 100%); }
+
+  /* product cards */
+  .pmedia.has-img{ background:var(--paper); overflow:hidden; }
+  .pmedia.has-img::before{ display:none; }
+  .pmedia .pimg{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; padding:14px; z-index:0; transition:transform .45s ease; }
+  .pcard:hover .pmedia .pimg{ transform:scale(1.05); }
+  .ribbon, .fav{ z-index:5; }
+
+  /* brand wall */
+  .bcell{ background:var(--paper); }
+  .bcell img{ max-width:72%; max-height:58%; width:auto; height:auto; object-fit:contain; mix-blend-mode:multiply; filter:grayscale(1); opacity:0.75; transition:filter .2s ease, opacity .2s ease, transform .2s ease; }
+  .bcell:hover img{ filter:none; opacity:1; transform:scale(1.06); }
+
+  /* awards */
+  .awards-row{ gap:30px; }
+  .rosette{ width:132px; }
+  .rosette img{ width:92px; height:92px; object-fit:contain; margin:0 auto 12px; }
+  .rosette p{ margin-top:0; }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="offer-bar">10% OFF YOUR FIRST ORDER &nbsp;·&nbsp; USE OFFER CODE <b>RFX10QR</b></div>
+
+<header>
+  <div class="header-top">
+    <a href="#" class="logo" aria-label="Bounce Creative Designs — home">
+      <img class="logo-img" src="../img/logo/bounce-logo-dark.png" alt="Bounce Creative Designs" width="240" height="71">
+    </a>
+    <div class="search-bar">
+      <input type="text" placeholder="Search branded products…">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#726F77" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    </div>
+    <div class="head-icons">
+      <a href="#" class="head-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span>Account</span></a>
+      <a href="#" class="head-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><span>Wishlist</span></a>
+      <a href="#" class="head-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><circle cx="9" cy="21" r="1.4"/><circle cx="18" cy="21" r="1.4"/><path d="M2 3h2l2.4 12.6a2 2 0 0 0 2 1.6h8.7a2 2 0 0 0 2-1.6L21 7H6"/></svg><span>Cart</span></a>
+    </div>
+  </div>
+  <nav class="cat-nav"><div class="cat-nav-inner">
+    <a href="#categories">Bags</a><a href="#">Tech</a><a href="#">Drinkware</a><a href="#">Clothing</a><a href="#">Pens</a><a href="#">Notebooks</a><a href="#">Office</a><a href="#">Outdoors &amp; Leisure</a><a href="#">Giveaways</a><a href="#">Home &amp; Living</a><a href="#">Themes &amp; Events</a><a href="#eco">Eco</a>
+  </div></nav>
+</header>
+
+<!-- ============ LIVE HERO ============ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-dots"></div>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <span class="particle pa1"></span>
+    <span class="particle pa2"></span>
+    <span class="particle pa3"></span>
+    <span class="particle pa4"></span>
+    <span class="particle pa5"></span>
+  </div>
+  <div class="hero-vignette"></div>
+
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="adot"></span> Est. 2013 · London, UK</div>
+      <h1>We've helped thousands of companies create <span class="hl">perfect branded products.</span></h1>
+      <p class="lede">Design-led promotional merchandise with real ESG data behind it — what you hand out looks brilliant and holds up to scrutiny.</p>
+      <div class="hero-actions">
+        <a href="#categories" class="btn btn-pink pulse shine">Shop the ranges</a>
+        <a href="#" class="btn btn-ol-light">View &amp; download our catalogue</a>
+      </div>
+      <div class="trusted-line">Trusted by well-known brands</div>
+      <div class="trusted-logos">
+        <img src="../img/client/amazon-logo.svg" alt="Amazon" width="603" height="182">
+        <img src="../img/client/virgin-atlantic-logo.svg" alt="Virgin Atlantic" width="603" height="182">
+        <img src="../img/client/boohoo.svg" alt="boohoo" width="603" height="182">
+        <img src="../img/client/bplogo.svg" alt="bp" width="603" height="182">
+        <img src="../img/client/coca-cola-logo.svg" alt="Coca-Cola" width="603" height="182">
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+      <div class="ring" id="ring">
+        <div class="card c-ink has-img" style="--a:0deg"><img class="cimg" src="../img/category/reusable-drinkware.jpg" alt="Drinkware" loading="lazy"><span class="cimg-scrim"></span><span class="chip">Drinkware</span></div>
+        <div class="card c-tint has-img" style="--a:40deg"><img class="cimg" src="../img/category/anti-theft-and-rfid.jpg" alt="Bags" loading="lazy"><span class="cimg-scrim"></span><span class="chip">Bags</span></div>
+        <div class="card c-pink has-img" style="--a:80deg"><img class="cimg" src="../img/category/clothing.jpg" alt="Clothing" loading="lazy"><span class="cimg-scrim"></span><span class="chip">Clothing</span></div>
+        <div class="card c-tint has-img" style="--a:120deg"><img class="cimg" src="../img/category/sustainable-notebooks.jpg" alt="Notebooks" loading="lazy"><span class="cimg-scrim"></span><span class="chip">Notebooks</span></div>
+        <div class="card c-ink has-img" style="--a:160deg"><img class="cimg" src="../img/category/sound-and-music.jpg" alt="Tech" loading="lazy"><span class="cimg-scrim"></span><span class="chip">Tech</span></div>
+        <div class="card c-pink has-img" style="--a:200deg"><img class="cimg" src="../img/category/impact-aware.jpg" alt="Office" loading="lazy"><span class="cimg-scrim"></span><span class="chip">Office</span></div>
+        <div class="card c-tint has-img" style="--a:240deg"><img class="cimg" src="../img/category/sustainable-and-eco.jpg" alt="Eco" loading="lazy"><span class="cimg-scrim"></span><span class="chip">Eco</span></div>
+        <div class="card c-ink has-img" style="--a:280deg"><img class="cimg" src="../img/category/lifestyle.jpg" alt="Pens" loading="lazy"><span class="cimg-scrim"></span><span class="chip">Pens</span></div>
+        <div class="card c-pink has-img" style="--a:320deg"><img class="cimg" src="../img/category/solar-and-eco-tech.jpg" alt="Giveaways" loading="lazy"><span class="cimg-scrim"></span><span class="chip">Giveaways</span></div>
+      </div>
+      <div class="drag-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3"/></svg> Drag to spin</div>
+    </div>
+  </div>
+
+  <div class="scroll-cue">
+    <span class="txt">Scroll to explore</span>
+    <div class="mouse pulse"></div>
+  </div>
+</section>
+
+<div class="trust-band">
+  <div class="wrap">
+    <span class="tb-label">Also supplying</span>
+    <div class="tb-logos">
+      <span class="tb-logo"><img src="../img/brand/karst.jpg" alt="Karst" loading="lazy"></span>
+      <span class="tb-logo"><img src="../img/brand/mepal.jpg" alt="Mepal" loading="lazy"></span>
+      <span class="tb-logo"><img src="../img/brand/moleskine-1.svg" alt="Moleskine" loading="lazy"></span>
+      <span class="tb-logo"><img src="../img/brand/camelbak.jpg" alt="CamelBak" loading="lazy"></span>
+      <span class="tb-logo"><img src="../img/brand/thule-1.svg" alt="Thule" loading="lazy"></span>
+      <span class="tb-logo"><img src="../img/brand/black-blum-logo-1.svg" alt="black+blum" loading="lazy"></span>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT SETS US APART -->
+<section class="section-tight">
+  <div class="wrap">
+    <div class="apart reveal">
+      <div class="apart-head">What sets<br>us apart?</div>
+      <div class="apart-item"><span class="adot"></span><div><b>High-quality products</b><span>Vetted suppliers, no exceptions</span></div></div>
+      <div class="apart-item"><span class="adot"></span><div><b>Online ordering</b><span>Live stock &amp; instant pricing</span></div></div>
+      <div class="apart-item"><span class="adot"></span><div><b>100% compliant</b><span>BPMA, ISO 9001, Sedex audited</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP BY CATEGORY -->
+<section class="section bg-tint" id="categories">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow"><span class="adot"></span> Shop by category</div><h2>Every branded product on your list, one supplier.</h2></div>
+      <a href="#" class="sec-cta">View all categories →</a>
+    </div>
+    <div class="cat-grid stagger">
+      <a href="#" class="ctile has-img"><img class="ctile-img" src="../img/category/anti-theft-and-rfid.jpg" alt="Bags" loading="lazy"><span class="ctile-scrim"></span><div class="cn">Bags</div><div class="cc">240+ products</div></a>
+      <a href="#" class="ctile has-img"><img class="ctile-img" src="../img/category/solar-and-eco-tech.jpg" alt="Tech" loading="lazy"><span class="ctile-scrim"></span><div class="cn">Tech</div><div class="cc">150+ products</div></a>
+      <a href="#" class="ctile has-img"><img class="ctile-img" src="../img/category/reusable-drinkware.jpg" alt="Drinkware" loading="lazy"><span class="ctile-scrim"></span><div class="cn">Drinkware</div><div class="cc">190+ products</div></a>
+      <a href="#" class="ctile has-img"><img class="ctile-img" src="../img/category/clothing.jpg" alt="Clothing" loading="lazy"><span class="ctile-scrim"></span><div class="cn">Clothing</div><div class="cc">310+ products</div></a>
+      <a href="#" class="ctile has-img"><img class="ctile-img" src="../img/category/lifestyle.jpg" alt="Pens" loading="lazy"><span class="ctile-scrim"></span><div class="cn">Pens</div><div class="cc">380+ products</div></a>
+      <a href="#" class="ctile has-img"><img class="ctile-img" src="../img/category/sustainable-notebooks.jpg" alt="Notebooks" loading="lazy"><span class="ctile-scrim"></span><div class="cn">Notebooks</div><div class="cc">95+ products</div></a>
+      <a href="#" class="ctile has-img"><img class="ctile-img" src="../img/category/impact-aware.jpg" alt="Office" loading="lazy"><span class="ctile-scrim"></span><div class="cn">Office</div><div class="cc">120+ products</div></a>
+      <a href="#" class="ctile has-img"><img class="ctile-img" src="../img/category/sustainable-and-eco.jpg" alt="Eco" loading="lazy"><span class="ctile-scrim"></span><div class="cn">Eco</div><div class="cc">280+ products</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- BEST SELLERS -->
+<section class="section" id="bestsellers">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow"><span class="adot"></span> Best sellers · August 2026</div><h2>What everyone's ordering this month.</h2></div>
+      <a href="#" class="sec-cta">View all best sellers →</a>
+    </div>
+    <div class="filter-row reveal">
+      <div class="fpill active">Gift Boxes</div><div class="fpill">Notebooks</div><div class="fpill">Pens</div><div class="fpill">Bags</div><div class="fpill">Bottles</div><div class="fpill">Mugs</div><div class="fpill">Tech</div>
+    </div>
+    <div class="rail stagger">
+      <div class="pcard traced"><div class="pmedia pink shine has-img"><img class="pimg" src="../img/product/1_0_10067790_1.jpg" alt="CamelBak Eddy+ 600ml Bottle" loading="lazy"><div class="live-badge"><span class="rec"></span> #1 Bestseller</div><div class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div></div>
+        <div class="pbody"><span class="pcat">Drinkware</span><span class="pname">CamelBak Eddy+ 600ml Bottle</span><span class="pstars">★★★★★</span><div class="pfoot"><span class="pprice">£6.85 <span>from</span></span><div class="addb"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div></div></div></div>
+      <div class="pcard"><div class="pmedia tint has-img"><img class="pimg" src="../img/product/5_0_500221__CT_150__bcd084c9db5641a3a19206dce5255ee1_2.jpg" alt="Vinga Baltimore Weekend Bag" loading="lazy"><div class="ribbon solid">#2 Best Seller</div><div class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div></div>
+        <div class="pbody"><span class="pcat">Bags</span><span class="pname">Vinga Baltimore Weekend Bag</span><span class="pstars">★★★★★</span><div class="pfoot"><span class="pprice">£30.16 <span>from</span></span><div class="addb"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div></div></div></div>
+      <div class="pcard"><div class="pmedia tint has-img"><img class="pimg" src="../img/product/1_0_10779190_2.jpg" alt="Karst Stone Paper Notebook A5" loading="lazy"><div class="ribbon solid">#3 Best Seller</div><div class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div></div>
+        <div class="pbody"><span class="pcat">Notebooks</span><span class="pname">Karst Stone Paper Notebook A5</span><span class="pstars">★★★★★</span><div class="pfoot"><span class="pprice">£8.40 <span>from</span></span><div class="addb"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div></div></div></div>
+      <div class="pcard"><div class="pmedia tint has-img"><img class="pimg" src="../img/product/m_o_mo9962-22_3.jpg" alt="Mepal Ellipse Lunch Pot" loading="lazy"><div class="ribbon solid">#4 Best Seller</div><div class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div></div>
+        <div class="pbody"><span class="pcat">Office</span><span class="pname">Mepal Ellipse Lunch Pot</span><span class="pstars">★★★★★</span><div class="pfoot"><span class="pprice">£7.20 <span>from</span></span><div class="addb"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- POPULAR PRODUCTS -->
+<section class="section bg-tint">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow"><span class="adot"></span> Popular products</div><h2>Customer favourites, right now.</h2></div>
+      <a href="#" class="sec-cta">Browse full catalogue →</a>
+    </div>
+    <div class="filter-row reveal">
+      <div class="fpill active">Gift Boxes</div><div class="fpill">Notebooks</div><div class="fpill">Pens</div><div class="fpill">Bags</div><div class="fpill">Bottles</div><div class="fpill">Mugs</div><div class="fpill">Umbrellas</div><div class="fpill">Chargers</div>
+    </div>
+    <div class="rail stagger">
+      <div class="pcard"><div class="pmedia ink has-img"><img class="pimg" src="../img/product/m_o_mo6666-03_2.jpg" alt="Drip Card Box, Magnetic Closure" loading="lazy"><div class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div></div>
+        <div class="pbody"><span class="pcat">Gift Boxes</span><span class="pname">Drip Card Box, Magnetic Closure</span><span class="pstars">★★★★☆</span><div class="pfoot"><span class="pprice">£3.60 <span>from</span></span><div class="addb"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div></div></div></div>
+      <div class="pcard"><div class="pmedia tint has-img"><img class="pimg" src="../img/product/m_o_mo6620-16_9.jpg" alt="Cocktail Drinks Gift Set, Neon" loading="lazy"><div class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div></div>
+        <div class="pbody"><span class="pcat">Gift Sets</span><span class="pname">Cocktail Drinks Gift Set, Neon</span><span class="pstars">★★★★★</span><div class="pfoot"><span class="pprice">£5.94 <span>from</span></span><div class="addb"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div></div></div></div>
+      <div class="pcard"><div class="pmedia tint has-img"><img class="pimg" src="../img/product/m_o_mo6630-22.jpg" alt="Glass Kitchen Oil Spray, Yushima" loading="lazy"><div class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div></div>
+        <div class="pbody"><span class="pcat">Kitchen</span><span class="pname">Glass Kitchen Oil Spray, Yushima</span><span class="pstars">★★★★☆</span><div class="pfoot"><span class="pprice">£1.38 <span>from</span></span><div class="addb"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div></div></div></div>
+      <div class="pcard"><div class="pmedia tint has-img"><img class="pimg" src="../img/product/m_o_mo6648-40_2.jpg" alt="Nut Cracker Set, Bamboo Bowl" loading="lazy"><div class="fav"><svg viewBox="0 0 24 24" fill="none" stroke="#18171C" stroke-width="1.6"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg></div></div>
+        <div class="pbody"><span class="pcat">Home</span><span class="pname">Nut Cracker Set, Bamboo Bowl</span><span class="pstars">★★★★★</span><div class="pfoot"><span class="pprice">£4.94 <span>from</span></span><div class="addb"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT CALCULATOR -->
+<section class="section-tight" id="eco">
+  <div class="wrap">
+    <div class="calc reveal traced on-dark">
+      <div>
+        <div class="eyebrow" style="color:var(--pink)"><span class="adot"></span> Eco impact calculator</div>
+        <h2>See the difference <span class="hl">before</span> you order.</h2>
+        <p class="desc">Drag to your order quantity and watch the real ESG impact of choosing our eco range over standard equivalents — the same data we put in every quote.</p>
+        <div class="qty-presets">
+          <button class="qpreset" data-qty="250">250</button>
+          <button class="qpreset active" data-qty="500">500</button>
+          <button class="qpreset" data-qty="1000">1,000</button>
+          <button class="qpreset" data-qty="2500">2,500</button>
+        </div>
+        <div class="qty-slider-row">
+          <input type="range" id="qtySlider" min="50" max="5000" step="10" value="500">
+          <div class="qty-display" id="qtyDisplay">500<span>units ordered</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="calc-results">
+          <div class="cstat"><b id="statCo2">210kg</b><span>CO2e saved vs standard products</span></div>
+          <div class="cstat"><b id="statPlastic">9kg</b><span>single-use plastic avoided</span></div>
+          <div class="cstat wide"><b id="statTrees">10 trees</b><span>equivalent carbon absorbed per year</span></div>
+        </div>
+        <div class="calc-note">*Illustrative estimate based on average lifecycle savings across our eco range vs standard equivalents. Ask your account manager for order-specific ESG data.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="wrap">
+    <div class="why-tabs reveal"><span class="active">Why promotional products?</span><span>Quality merchandise, 24/7</span><span>Global Recycle Standard</span><span>Recycled claim standard</span><span>CO2 — changing the way we give</span></div>
+    <div class="why-grid reveal">
+      <div><h2>Why promotional products?</h2><p>Promotional products give your brand a huge tangible reach — <b>81% of consumers keep an item for at least a year</b> after receiving it, and they're twice as likely to drive action as traditional ad spend.</p></div>
+      <div><p>Whether it's an event launch, a client thank-you or restocking office essentials, we handle the design work end to end — colour-matched to your Pantone, printed by vetted suppliers, and backed by ESG data you can put straight into your own reporting.</p><a href="#quote" class="btn btn-pink btn-sm" style="margin-top:10px;">Start your marketing campaign</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFIED -->
+<section class="section-tight">
+  <div class="wrap">
+    <div class="sec-head center-head reveal"><div class="eyebrow"><span class="adot"></span> Certified and accountable</div><h2>Every claim, independently checked.</h2></div>
+    <div class="cert-row stagger">
+      <div class="cert"><span class="adot"></span><b>BPMA Member</b></div>
+      <div class="cert"><span class="adot"></span><b>ISO 9001</b></div>
+      <div class="cert"><span class="adot"></span><b>Global Recycled Standard</b></div>
+      <div class="cert"><span class="adot"></span><b>FSC Certified</b></div>
+      <div class="cert"><span class="adot"></span><b>Sedex Audited</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND WALL -->
+<section class="section bg-tint">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><div class="eyebrow"><span class="adot"></span> 25+ brands</div><h2>Supplying amazing brands.</h2></div></div>
+    <div class="brand-grid reveal">
+      <div class="bcell"><img src="../img/brand/hi-idea.jpg" alt="hiidea" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/iqoniq.jpg" alt="IQONIQ" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/journalbooks.jpg" alt="JournalBooks" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/karst.jpg" alt="Karst" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/mepal.jpg" alt="Mepal" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/sharpie.jpg" alt="Sharpie" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/skross.jpg" alt="SKROSS" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/vinga.jpg" alt="VINGA" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/waterman.jpg" alt="Waterman" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/xoopar.jpg" alt="Xoopar" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/moleskine-1.svg" alt="Moleskine" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/parker-emblem-1.svg" alt="Parker" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/thule-1.svg" alt="Thule" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/black-blum-logo-1.svg" alt="black+blum" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/avira.jpg" alt="Avira" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/aware-tracer.jpg" alt="Aware" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/bodum.jpg" alt="Bodum" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/camelbak.jpg" alt="CamelBak" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/case-logic.jpg" alt="Case Logic" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/circular-co.jpg" alt="Circular&Co" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/gearx.jpg" alt="Gear X" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/hidratespark.jpg" alt="HidrateSpark" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/ukiyo.jpg" alt="Ukiyo" loading="lazy"></div>
+      <div class="bcell"><img src="../img/brand/urban-vitamin.jpg" alt="Urban Vitamin" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section class="section" id="awards">
+  <div class="wrap">
+    <div class="sec-head center-head reveal"><div class="eyebrow"><span class="adot"></span> We're really proud</div><h2>Our awards.</h2></div>
+    <div class="awards-row stagger">
+      <div class="rosette"><img src="../img/award/bpma-1.svg" alt="BPMA Member" loading="lazy"><p>BPMA accredited member</p></div>
+      <div class="rosette"><img src="../img/award/psi-1.svg" alt="PSI Member" loading="lazy"><p>PSI member no. 17366</p></div>
+      <div class="rosette"><img src="../img/award/bounce-creative-designs-award-winning-merchandise1-1.svg" alt="Distributor of the Year 2019" loading="lazy"><p>Distributor of the Year 2019 &mdash; 3rd place</p></div>
+      <div class="rosette"><img src="../img/award/bounce-creative-designs-award-winning-merchandise2-1.svg" alt="Distributor of the Year 2018" loading="lazy"><p>Distributor of the Year 2018 &mdash; 1st place</p></div>
+      <div class="rosette"><img src="../img/award/bpma-winners-bounce-creative-designs-promotional-products-uk.png" alt="BPMA Distributor of the Year 2020" loading="lazy"><p>BPMA Distributor of the Year 2020</p></div>
+      <div class="rosette"><img src="../img/award/bpma-winners-2023-bounce-creative-designs-promotional-products-uk.png" alt="BPMA Distributor of the Year 2023" loading="lazy"><p>BPMA Distributor of the Year 2023</p></div>
+      <div class="rosette"><img src="../img/award/bpma2-1.svg" alt="BPMA member" loading="lazy"><p>BPMA member</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section bg-tint" id="reviews">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><div class="eyebrow"><span class="adot"></span> 4.87★ · 111 reviews</div><h2>What clients say after the box arrives.</h2></div></div>
+    <div class="quotes stagger">
+      <div class="qcard"><div class="qstars">★★★★★</div><p>"Proof turnaround was same-day and the print matched our brand guidelines exactly. Reordering already."</p><div class="qwho">Marketing Lead, Northgate</div></div>
+      <div class="qcard"><div class="qstars">★★★★★</div><p>"Needed 500 tote bags for a conference in nine days. They hit the date and the quality held up in person."</p><div class="qwho">Events Manager, Fenwick Group</div></div>
+      <div class="qcard"><div class="qstars">★★★★★</div><p>"First supplier who actually explained the eco material options instead of just quoting a price."</p><div class="qwho">Procurement, Aldergate</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HELP -->
+<section class="section-tight">
+  <div class="wrap">
+    <div class="help reveal">
+      <div class="help-av"></div>
+      <div><h3>Can we <span class="circ">help?<svg viewBox="0 0 100 40" fill="none"><path d="M4 22C10 6 40 2 60 6c18 4 30 16 24 28-6 10-34 8-48 0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></span></h3><div class="help-sub">Speak with our team about products, branding, artwork or delivery options.</div></div>
+      <a href="#quote" class="btn btn-ol-dark">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="section-tight" id="quote">
+  <div class="wrap">
+    <div class="news reveal">
+      <div><h3>Join 250,000+ happy customers</h3><p>Exclusive deals, market insights and inspiration — once a month, no spam.</p></div>
+      <div class="news-form"><input type="email" placeholder="you@company.co.uk" aria-label="Email address"><button class="btn btn-onpink" type="button">Sign up</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="foot-logo-row"><img class="foot-logo-img" src="../img/logo/bounce-logo.png" alt="Bounce Creative Designs" width="240" height="71" loading="lazy"></div>
+        <p>Award-winning promotional merchandise and brand management, based in London since 2013.</p>
+        <div class="foot-social">
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M15 8h2V4h-3a4 4 0 0 0-4 4v2H7v4h3v8h4v-8h3l1-4h-4V8a1 1 0 0 1 1-1z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+          <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><path d="M4 4l16 16M20 4L4 20"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 13v4"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col"><h4>Shop</h4><a href="#">Bags</a><a href="#">Drinkware</a><a href="#">Clothing</a><a href="#">Eco products</a></div>
+      <div class="foot-col"><h4>Themes &amp; Events</h4><a href="#">Corporate gifts</a><a href="#">Exhibitions</a><a href="#">Onboarding kits</a><a href="#">Seasonal</a></div>
+      <div class="foot-col"><h4>About us</h4><a href="#">Our values</a><a href="#">Our awards</a><a href="#">Client portfolio</a><a href="#">Careers</a></div>
+      <div class="foot-col"><h4>Useful links</h4><a href="#">Compliance</a><a href="#">Sustainability</a><a href="#">Artwork guidelines</a><a href="#">Contact us</a></div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Bounce Creative Designs Ltd. All rights reserved.</span>
+      <div class="foot-legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    progress.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.14, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal, .stagger').forEach(el => io.observe(el));
+
+  /* ---- 3D wheel: auto-spin + drag ---- */
+  const ring = document.getElementById('ring');
+  const stage = document.getElementById('stage');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let rot = 0, vel = 0, auto = 0.08, dragging = false, lastX = 0;
+
+  function apply(){ const bob = Math.sin(performance.now()/900) * 7; ring.style.transform = `translate(-50%, calc(-50% + ${bob}px)) rotateY(${rot}deg)`; }
+
+  const cards = Array.from(ring.querySelectorAll('.card'));
+  const cardAngles = cards.map(c => parseFloat(c.style.getPropertyValue('--a')));
+  let litIndex = -1;
+  function highlightFront(){
+    // the card whose (angle + rot) is closest to 0 (mod 360) faces the viewer
+    let best = 0, bestDiff = 999;
+    for(let i=0;i<cards.length;i++){
+      let a = ((cardAngles[i] + rot) % 360 + 360) % 360;
+      let diff = Math.min(a, 360 - a);
+      if(diff < bestDiff){ bestDiff = diff; best = i; }
+    }
+    if(best !== litIndex){
+      if(litIndex >= 0) cards[litIndex].classList.remove('lit');
+      cards[best].classList.add('lit');
+      litIndex = best;
+    }
+  }
+
+  if(reduce){
+    rot = -12; apply(); highlightFront();
+  } else {
+    function frame(){
+      if(!dragging){ rot += auto + vel; vel *= 0.94; if(Math.abs(vel) < 0.002) vel = 0; }
+      apply();
+      highlightFront();
+      requestAnimationFrame(frame);
+    }
+    frame();
+
+    const down = (x) => { dragging = true; lastX = x; vel = 0; ring.classList.add('grabbing'); };
+    const move = (x) => { if(!dragging) return; const dx = x - lastX; rot += dx * 0.35; vel = dx * 0.35; lastX = x; };
+    const up = () => { dragging = false; ring.classList.remove('grabbing'); };
+
+    stage.addEventListener('pointerdown', e => down(e.clientX));
+    window.addEventListener('pointermove', e => move(e.clientX));
+    window.addEventListener('pointerup', up);
+    stage.addEventListener('pointerleave', () => { if(!dragging) return; });
+  }
+
+  /* ---- calculator ---- */
+  const slider = document.getElementById('qtySlider');
+  const qtyDisplay = document.getElementById('qtyDisplay');
+  const statCo2 = document.getElementById('statCo2');
+  const statPlastic = document.getElementById('statPlastic');
+  const statTrees = document.getElementById('statTrees');
+  const presets = document.querySelectorAll('.qpreset');
+  function updateCalc(qty){
+    qty = Math.max(50, Math.min(5000, qty));
+    qtyDisplay.innerHTML = Number(qty).toLocaleString() + '<span>units ordered</span>';
+    const co2 = Math.round(qty * 0.42);
+    const plastic = Math.round(qty * 0.018 * 10) / 10;
+    const trees = Math.max(1, Math.round(co2 / 21));
+    statCo2.textContent = co2.toLocaleString() + 'kg';
+    statPlastic.textContent = plastic.toLocaleString() + 'kg';
+    statTrees.textContent = trees.toLocaleString() + ' trees';
+  }
+  slider.addEventListener('input', (e) => {
+    updateCalc(Number(e.target.value));
+    presets.forEach(p => p.classList.toggle('active', Number(p.dataset.qty) === Number(e.target.value)));
+  });
+  presets.forEach(p => p.addEventListener('click', () => {
+    const qty = Number(p.dataset.qty);
+    slider.value = qty; updateCalc(qty);
+    presets.forEach(x => x.classList.remove('active')); p.classList.add('active');
+  }));
+  updateCalc(500);
+
+  /* count-up the eco stats the first time the calculator scrolls into view */
+  let counted = false;
+  const calcEl = document.querySelector('.calc');
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting && !counted){
+        counted = true;
+        const targetQty = 500, dur = 1100, t0 = performance.now();
+        function tick(now){
+          const p = Math.min(1, (now - t0) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          updateCalc(Math.round(50 + eased * (targetQty - 50)));
+          if(p < 1) requestAnimationFrame(tick);
+          else { updateCalc(500); slider.value = 500; }
+        }
+        if(!reduce) requestAnimationFrame(tick);
+        countObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.4 });
+  if(calcEl) countObserver.observe(calcEl);
+</script>
+
+</body>
+</html>
